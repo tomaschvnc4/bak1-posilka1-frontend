@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { Grid, TextField, Axios } from './_import';
 
@@ -19,40 +19,63 @@ import { useGlobalContext } from '../../context/Provider2';
 import { useForm } from 'react-hook-form';
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
+console.log('serverURL', serverUrl);
 
 const SetCennik = () => {
    const { setCennik, cennik } = useGlobalContext();
    const { register, handleSubmit, errors, setValue, reset } = useForm();
    const classes = useStyles();
    const [fetchData, setFetchData] = useState(false);
+   // const [itemToEditRef, setItemToEdit] = useRef({});
+   const itemToEditRef = useRef({});
+
+   console.log('cennik', cennik);
 
    async function onSubmit(data) {
-      console.log('data', data);
-      const { id, title, price } = data;
-      console.log(id, title, price);
-
-      let newCennik = cennik.filter(
-         (item) => item.title.toLowerCase() !== data.title.toLowerCase()
-      );
-      console.log('newCennik before', newCennik);
-      newCennik.splice(parseInt(id), 0, { title, price });
-      console.log('newCennik after', newCennik);
-      Axios.post(`${serverUrl}/cennik/change`, { payload: newCennik });
-      setCennik(newCennik);
+      console.log('dataSubmit', data);
+      const { id: poradie, title, price } = data;
+      const { id } = itemToEditRef.current || '';
+      console.log(poradie, title, price);
+      console.log('REF', JSON.stringify(itemToEditRef));
+      // let newCennik = cennik.filter(
+      //    (item) => item.title.toLowerCase() !== data.title.toLowerCase()
+      // );
+      const newItem = { id, poradie, title, price };
+      console.log('newItem', newItem);
+      // console.log('newCennik before', newCennik);
+      // newCennik.splice(parseInt(id), 0, { title, price });
+      // console.log('newCennik after', newCennik);
+      await Axios.post(`${serverUrl}/cennik/change`, { payload: newItem });
+      // setCennik(newCennik);
       reset();
+      itemToEditRef.current = {};
+      setFetchData(!fetchData);
    }
 
-   async function deleteItem(title) {
+   async function deleteItem(id) {
       const response = await Axios.delete(`${serverUrl}/cennik/deleteItem`, {
-         data: { payload: title },
+         data: { payload: id },
       });
       if (response.status === 200) {
          setFetchData(!fetchData);
       }
    }
 
+   async function getCennik() {
+      const response = await Axios.get(`${serverUrl}/cennik/get`);
+      const { data, status } = response;
+      console.log('data', data);
+      data.sort((o1, o2) => {
+         return o1.poradie - o2.poradie;
+      });
+      console.log('data after sort', data);
+      status === 200 && setCennik(data);
+   }
+
    function edit(index) {
       const { title, price } = cennik[index];
+      // setItemToEdit(cennik[index]);
+      itemToEditRef.current = cennik[index];
       setValue('id', index);
       setValue('title', title);
       setValue('price', price);
@@ -60,10 +83,7 @@ const SetCennik = () => {
 
    useEffect(async () => {
       console.log('EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE');
-      const response = await Axios.get(`${serverUrl}/cennik/get`);
-      const { data, status } = response;
-      console.log('data', data);
-      status === 200 && setCennik(data);
+      getCennik();
    }, [fetchData]);
 
    return (
@@ -152,11 +172,11 @@ const SetCennik = () => {
                <Table className={classes.table}>
                   <TableBody>
                      {cennik.map((item, index) => {
-                        const { title, price } = item || {};
+                        const { id, title, price, poradie } = item || {};
                         return (
                            title && (
                               <StyledTableRow key={index}>
-                                 <StyledTableCell>{index}.</StyledTableCell>
+                                 <StyledTableCell>{poradie}.</StyledTableCell>
                                  <StyledTableCell>{title}</StyledTableCell>
                                  <StyledTableCell>{price}€</StyledTableCell>
                                  <StyledTableCell style={{ display: 'inline-flex' }}>
@@ -166,7 +186,7 @@ const SetCennik = () => {
                                        onClick={() => edit(index)}>
                                        <CreateIcon />
                                     </IconButton>
-                                    <IconButton onClick={() => deleteItem(title)}>
+                                    <IconButton onClick={() => deleteItem(id)}>
                                        <DeleteForeverRoundedIcon color='secondary' size='small' />
                                     </IconButton>
                                  </StyledTableCell>

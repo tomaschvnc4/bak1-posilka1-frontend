@@ -26,7 +26,7 @@ const TestComponet = () => {
    const { register, handleSubmit } = useForm(); // potom skusit cez controll aby bolo mozne mat defaul hodnotu bez prerendrovana vzdy pri zmene
    const { calSettings, setCalSettings, setPosunDay } = useGlobalContext();
    const [newCalSettings, setNewCalSettings] = useState({});
-   console.log('MMMMMMMMM--newCalSettings', newCalSettings);
+   // console.log('MMMMMMMMM--newCalSettings', newCalSettings);
 
    const myOnSubmit = (data) => {
       console.log('submit:', data);

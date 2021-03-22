@@ -99,15 +99,15 @@ const AppProvider = ({ children }) => {
       const { minT, maxT } = calSettings;
       let workingMinT = '23:00';
       let workingMaxT = '01:00';
-      console.log('ZACIATOK objOpen', objOpen);
-      console.log('ZACIATOK newObjOpen', JSON.stringify(newObjOpen));
+      // console.log('ZACIATOK objOpen', objOpen);
+      // console.log('ZACIATOK newObjOpen', JSON.stringify(newObjOpen));
 
       const length = arrTime.length;
       if (length !== 0) {
          for (let i = 0; i < 7; i++) {
             let day = startDay.clone().add(i, 'days');
             const timestamp = day.valueOf();
-            console.log(capitalize(noDiacritics(day.format('dddd'))));
+            // console.log(capitalize(noDiacritics(day.format('dddd'))));
             arrWeek.push(day);
             if (!newReserve[timestamp]) {
                newReserve[timestamp] = Array.from({ length: arrTime.length }, () => 0);
@@ -140,12 +140,12 @@ const AppProvider = ({ children }) => {
          if (workingMinT >= minT) workingMinT = minT;
          if (workingMaxT <= maxT) workingMaxT = maxT;
 
-         console.log('arrReserve', arrReserve);
-         console.log('newReserve', newReserve);
-         console.log('userSelect', userSelect);
-         console.log('newuserSelect', newUserSelect);
-         console.log('objOpen', objOpen);
-         console.log('newObjOpen', JSON.stringify(newObjOpen));
+         // console.log('arrReserve', arrReserve);
+         // console.log('newReserve', newReserve);
+         // console.log('userSelect', userSelect);
+         // console.log('newuserSelect', newUserSelect);
+         // console.log('objOpen', objOpen);
+         // console.log('newObjOpen', JSON.stringify(newObjOpen));
 
          console.log('END SET_WEEK');
          setArrWeek(arrWeek);
@@ -163,7 +163,7 @@ const AppProvider = ({ children }) => {
       const od = calSettings[`${dayStr}_od`];
       const doo = calSettings[`${dayStr}_do`];
       let tmp = [];
-      console.log('PPPPPPPPPPPPPPPPPPP', calSettings);
+      // console.log('PPPPPPPPPPPPPPPPPPP', calSettings);
       arrTime.forEach((cas) => {
          if (cas >= od && cas <= doo) {
             tmp.push(true);
@@ -186,7 +186,7 @@ const AppProvider = ({ children }) => {
          newObjOpen[timestamp] = arrTime.map((cas) => {
             return cas >= od && cas <= doo ? true : false;
          });
-         console.log('newObjOpen1', JSON.stringify(newObjOpen));
+         // console.log('newObjOpen1', JSON.stringify(newObjOpen));
       });
       setObjOpen(newObjOpen);
       setFlags({ ...flags, objOpenSDOH_setted: true });

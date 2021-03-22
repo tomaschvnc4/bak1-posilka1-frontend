@@ -51,7 +51,7 @@ const Sluzby = () => {
 export default Sluzby;
 
 const Polozka = ({ props }) => {
-   console.log('props', props);
+   // console.log('props', props);
    const { title, text1, text2, img, imgRight } = props;
    const classes = useStyles();
    const theme = useTheme();
@@ -97,7 +97,8 @@ const useStyles = makeStyles((theme) => ({
       },
       '& .MuiPaper-elevation20': {
          boxShadow:
-            '0px 10px 13px -6px rgb(0 0 0 / 20%), 0px 20px 31px 3px rgb(204 163 0 / 14%), 0px 8px 38px 7px rgb(204 163 0 / 12%)',
+            '0px 10px 13px -6px rgb(0 0 0 / 20%), 0px 20px 31px 3px rgb(0 0 0 / 14%), 0px 8px 38px 7px rgb(204 163 0 / 12%)',
+         // '0px 10px 13px -6px rgb(0 0 0 / 20%), 0px 20px 31px 3px rgb(204 163 0 / 14%), 0px 8px 38px 7px rgb(204 163 0 / 12%)',
       },
       '& img': {
          width: '100%',
