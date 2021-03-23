@@ -1,12 +1,16 @@
-import { Paper, Typography } from '@material-ui/core';
+import { makeStyles, Paper, Typography } from '@material-ui/core';
 import React from 'react';
 import { Grid } from './test/_import';
 import SvgIcon from '@material-ui/core/SvgIcon';
 
 import PositionIcon from '../svgIcons/PositionIcon';
 import OtvaracieHodiny from './footer/OtvaracieHodiny';
+import MailOutlineRoundedIcon from '@material-ui/icons/MailOutlineRounded';
+import PhoneAndroidRoundedIcon from '@material-ui/icons/PhoneAndroidRounded';
+import clsx from 'clsx';
 
 const Kontakt = () => {
+   const classes = useStyles();
    return (
       <main className='kontakt-main-container'>
          <Typography variant='h3'>
@@ -19,26 +23,45 @@ const Kontakt = () => {
                md={6}
                xs={12}
                component='section'
-               // justify='center'
                alignItems='center'
-               className='kontakt-info'
+               className={clsx('kontakt-info', classes.root)}
                direction='column'>
-               <div style={{ display: 'inline-flex', marginBottom: '10px' }}>
-                  <SvgIcon
-                     component={PositionIcon}
-                     style={{
-                        width: '50px',
-                        height: '65px',
-                        color: '#7D0000',
-                        color2: '',
-                     }}
-                  />
-                  {/* #E84434  */}
-                  <div style={{ marginLeft: '15px', color: '#7D0000' /**indianred */ }}>
+               <Grid container item xs={12} justify='center'>
+                  <Grid item xs={2}>
+                     <SvgIcon
+                        component={PositionIcon}
+                        style={{
+                           width: '50px',
+                           height: '65px',
+                           color: '#7D0000',
+                           color2: '',
+                        }}
+                     />
+                     {/* #E84434  */}
+                  </Grid>
+                  <Grid item xs={9} sm={6}>
                      <Typography variant='h6'>1. mája 1945/57,</Typography>
                      <Typography variant='h6'>031 01 Liptovský Mikuláš</Typography>
-                  </div>
-               </div>
+                  </Grid>
+               </Grid>
+
+               <Grid container item xs={12} justify='center' alignItems='center'>
+                  <Grid item xs={2}>
+                     <MailOutlineRoundedIcon />
+                  </Grid>
+                  <Grid item xs={9} sm={6}>
+                     <Typography variant='h6'>junglegym@gmail.com</Typography>
+                  </Grid>
+               </Grid>
+
+               <Grid container item xs={12} justify='center' alignItems='center'>
+                  <Grid item xs={2}>
+                     <PhoneAndroidRoundedIcon />
+                  </Grid>
+                  <Grid item xs={9} sm={6}>
+                     <Typography variant='h6'>+421123456789</Typography>
+                  </Grid>
+               </Grid>
                <Paper elevation={5} className='kontakt-paper'>
                   <OtvaracieHodiny />
                </Paper>
@@ -60,3 +83,19 @@ const Kontakt = () => {
 };
 
 export default Kontakt;
+
+const useStyles = makeStyles((theme) => ({
+   root: {
+      '& .MuiGrid-root': {
+         color: '#7D0000',
+         marginTop: '2px',
+      },
+      '& .MuiGrid-root h6': {
+         color: '#7D0000',
+      },
+      '& svg': {
+         color: '#7D0000',
+         fontSize: '50px',
+      },
+   },
+}));

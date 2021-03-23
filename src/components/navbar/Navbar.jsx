@@ -6,6 +6,7 @@ import {AppBar, Toolbar, Grid,  MenuIcon ,makeStyles, useTheme,useMediaQuery,cls
 
 import myIcon from '../../images/jungleGYm logo2.png';
 import Links from './Links';
+import NavFB from './NavFB';
 
 const BREAKPOINT = 'sm';
 
@@ -41,12 +42,16 @@ function Navbar() {
                      </Link>
 
                      {isMobile ? (
-                        <button className='nav-toggle' onClick={() => setShowLink(!showLinks)}>
-                           <MenuIcon />
-                        </button>
+                        <div style={{ display: 'flex' }}>
+                           <button className='nav-toggle' onClick={() => setShowLink(!showLinks)}>
+                              <MenuIcon />
+                           </button>
+                           <NavFB />
+                        </div>
                      ) : (
                         <div className={clsx(classes.zobrazenie)}>
                            <Links />
+                           <NavFB />
                         </div>
                      )}
                   </Toolbar>

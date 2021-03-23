@@ -118,6 +118,11 @@ a {
    height: 0;
 }
 
+.navFB {
+   display: flex;
+   align-items: center;
+}
+
 /* LOADING */
 .spinner {
    position: absolute;
@@ -298,7 +303,7 @@ FOOTER
 
 .footer-otvaracie-hodiny span {
    font-style: normal;
-   font-weight: 200;
+   font-weight: bold;
    /* justify-content: center; */
 }
 

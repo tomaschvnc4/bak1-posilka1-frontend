@@ -3,8 +3,8 @@
 import React from 'react';
 
 import { useAuth0 } from '@auth0/auth0-react';
-import { Typography } from '@material-ui/core';
-import Link from '@material-ui/core/Link';
+
+import { Link } from 'react-router-dom';
 
 const AuthenticationButton = () => {
    const { isAuthenticated } = useAuth0();
@@ -14,6 +14,7 @@ const AuthenticationButton = () => {
    return isAuthenticated ? (
       <li>
          <Link
+            to=''
             onClick={() => {
                logout({ returnTo: window.location.origin });
             }}>
@@ -23,6 +24,7 @@ const AuthenticationButton = () => {
    ) : (
       <li>
          <Link
+            to=''
             onClick={() => {
                loginWithRedirect();
             }}>
