@@ -45,7 +45,9 @@ const Cal_Table = () => {
                </TableHead>
                <TableBody>
                   <StyledTableRow>
-                     <StyledTableCell>-</StyledTableCell>
+                     <StyledTableCell>
+                        <b>Limit</b>
+                     </StyledTableCell>
                      {arrDays.map((day, index) => {
                         const timestamp = day.valueOf();
                         return (
@@ -79,7 +81,6 @@ const Cal_Table = () => {
                </TableBody>
             </Table>
          </TableContainer>
-         {/* </PreviewFrame> */}
       </div>
    );
 };

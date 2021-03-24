@@ -11,7 +11,14 @@ import { createMuiTheme } from '@material-ui/core';
 // import reportWebVitals from './reportWebVitals';
 // import { AppProvider } from './_contex';
 
-const theme = createMuiTheme({});
+const theme = createMuiTheme({
+   palette: {
+      secondary: {
+         // main: '#c62828',
+         main: '#8B0000',
+      },
+   },
+});
 ReactDOM.render(
    // <React.StrictMode>
    <Router>

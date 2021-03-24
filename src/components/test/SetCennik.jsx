@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { Grid, TextField, Axios } from './_import';
+import { Grid, TextField, Axios, Paper } from './_import';
 
 import {
    TableRow,
@@ -37,9 +37,7 @@ const SetCennik = () => {
       const { id } = itemToEditRef.current || '';
       console.log(poradie, title, price);
       console.log('REF', JSON.stringify(itemToEditRef));
-      // let newCennik = cennik.filter(
-      //    (item) => item.title.toLowerCase() !== data.title.toLowerCase()
-      // );
+
       const newItem = { id, poradie, title, price };
       console.log('newItem', newItem);
       // console.log('newCennik before', newCennik);
@@ -74,7 +72,7 @@ const SetCennik = () => {
 
    function edit(index) {
       const { title, price } = cennik[index];
-      // setItemToEdit(cennik[index]);
+
       itemToEditRef.current = cennik[index];
       setValue('id', index);
       setValue('title', title);
@@ -82,7 +80,6 @@ const SetCennik = () => {
    }
 
    useEffect(async () => {
-      console.log('EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE');
       getCennik();
    }, [fetchData]);
 
@@ -95,109 +92,121 @@ const SetCennik = () => {
          component='section'
          justify='center'
          alignItems='center'
-         direction='column'>
-         <p>Cennik</p>
-         <Grid
-            container
-            item
-            xs={12}
-            // md={10}
-            component='section'
-            direction='column'
-            alignItems='center'>
-            <form onSubmit={handleSubmit(onSubmit)} className={classes.root} noValidate>
-               <div>
-                  <TextField
-                     label='Poradie'
-                     name='id'
-                     type='number'
-                     error={errors.hasOwnProperty('id')}
-                     helperText={errors.id?.message}
-                     inputRef={register({
-                        required: 'Pole obsahuje nepovolené znaky!',
-                        pattern: {
-                           value: /^[0-9]*$/,
-                           message: 'Pole obsahuje nepovolené znaky!',
-                        },
-                     })}
-                     InputLabelProps={{
-                        shrink: true,
-                     }}
-                  />
-                  <TextField
-                     multiline
-                     label='Názov'
-                     name='title'
-                     error={errors.hasOwnProperty('title')}
-                     helperText={errors.title?.message}
-                     inputRef={register({
-                        pattern: {
-                           value: /^[a-zA-ZÀ-ž0-9_ -]*$/,
-                           message: 'Pole obsahuje nepovolené znaky!',
-                        },
-                        required: 'Pole nesmie byť prázdne!',
-                     })}
-                     InputLabelProps={{
-                        shrink: true,
-                     }}
-                  />
-                  <TextField
-                     label='Cena'
-                     name='price'
-                     type='number'
-                     error={errors.hasOwnProperty('price')}
-                     helperText={errors.price?.message}
-                     inputRef={register({
-                        required: 'Pole obsahuje nepovolené znaky!',
-                        pattern: {
-                           value: /^[0-9.,]*$/,
-                           message: 'Pole obsahuje nepovolené znaky!',
-                        },
-                     })}
-                     InputProps={{
-                        endAdornment: '€',
-                        inputProps: { step: 0.5 },
-                     }}
-                     InputLabelProps={{
-                        shrink: true,
-                     }}
-                  />
-               </div>
-               <input type='submit' />
-            </form>
-         </Grid>
+         direction='column'
+         className={classes.root}>
+         <Paper elevation={2}>
+            <div className='center'>
+               <p>Konkretny den</p>
+            </div>
+            <Grid
+               container
+               item
+               xs={12}
+               // md={10}
+               component='section'
+               direction='column'
+               alignItems='center'>
+               <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                  <div>
+                     <TextField
+                        label='Poradie'
+                        name='id'
+                        type='number'
+                        error={errors.hasOwnProperty('id')}
+                        helperText={errors.id?.message}
+                        inputRef={register({
+                           required: 'Pole obsahuje nepovolené znaky!',
+                           pattern: {
+                              value: /^[0-9]*$/,
+                              message: 'Pole obsahuje nepovolené znaky!',
+                           },
+                        })}
+                        InputLabelProps={{
+                           shrink: true,
+                        }}
+                     />
+                     <TextField
+                        multiline
+                        label='Názov'
+                        name='title'
+                        error={errors.hasOwnProperty('title')}
+                        helperText={errors.title?.message}
+                        inputRef={register({
+                           pattern: {
+                              value: /^[a-zA-ZÀ-ž0-9_ -]*$/,
+                              message: 'Pole obsahuje nepovolené znaky!',
+                           },
+                           required: 'Pole nesmie byť prázdne!',
+                        })}
+                        InputLabelProps={{
+                           shrink: true,
+                        }}
+                     />
+                     <TextField
+                        label='Cena'
+                        name='price'
+                        type='number'
+                        error={errors.hasOwnProperty('price')}
+                        helperText={errors.price?.message}
+                        inputRef={register({
+                           required: 'Pole obsahuje nepovolené znaky!',
+                           pattern: {
+                              value: /^[0-9.,]*$/,
+                              message: 'Pole obsahuje nepovolené znaky!',
+                           },
+                        })}
+                        InputProps={{
+                           endAdornment: '€',
+                           inputProps: { step: 0.5 },
+                        }}
+                        InputLabelProps={{
+                           shrink: true,
+                        }}
+                     />
+                  </div>
+                  <div className='center'>
+                     <input type='submit' />
+                  </div>
+               </form>
+            </Grid>
 
-         <Grid item container xs={10} alignItems='center' direction='column'>
-            <TableContainer>
-               <Table className={classes.table}>
-                  <TableBody>
-                     {cennik.map((item, index) => {
-                        const { id, title, price, poradie } = item || {};
-                        return (
-                           title && (
-                              <StyledTableRow key={index}>
-                                 <StyledTableCell>{poradie}.</StyledTableCell>
-                                 <StyledTableCell>{title}</StyledTableCell>
-                                 <StyledTableCell>{price}€</StyledTableCell>
-                                 <StyledTableCell style={{ display: 'inline-flex' }}>
-                                    <IconButton
-                                       size='small'
-                                       color='primary'
-                                       onClick={() => edit(index)}>
-                                       <CreateIcon />
-                                    </IconButton>
-                                    <IconButton onClick={() => deleteItem(id)}>
-                                       <DeleteForeverRoundedIcon color='secondary' size='small' />
-                                    </IconButton>
-                                 </StyledTableCell>
-                              </StyledTableRow>
-                           )
-                        );
-                     })}
-                  </TableBody>
-               </Table>
-            </TableContainer>
-         </Grid>
+            <Grid container justify='center'>
+               <Grid item xs={10}>
+                  <TableContainer>
+                     <Table className={classes.table}>
+                        <TableBody>
+                           {cennik.map((item, index) => {
+                              const { id, title, price, poradie } = item || {};
+                              return (
+                                 title && (
+                                    <StyledTableRow key={index}>
+                                       <StyledTableCell>{poradie}.</StyledTableCell>
+                                       <StyledTableCell>{title}</StyledTableCell>
+                                       <StyledTableCell>{price}€</StyledTableCell>
+                                       <StyledTableCell style={{ display: 'inline-flex' }}>
+                                          <IconButton
+                                             size='small'
+                                             color='primary'
+                                             onClick={() => edit(index)}>
+                                             <CreateIcon />
+                                          </IconButton>
+                                          <IconButton onClick={() => deleteItem(id)}>
+                                             <DeleteForeverRoundedIcon
+                                                color='secondary'
+                                                size='small'
+                                             />
+                                          </IconButton>
+                                       </StyledTableCell>
+                                    </StyledTableRow>
+                                 )
+                              );
+                           })}
+                        </TableBody>
+                     </Table>
+                  </TableContainer>
+               </Grid>
+            </Grid>
+         </Paper>
       </Grid>
    );
 };
@@ -208,13 +217,37 @@ const useStyles = makeStyles((theme) => ({
    table: {
       //   minWidth: 700,
       marginTop: '2%',
+      marginBottom: '2%',
    },
    root: {
+      marginTop: '2%',
+
+      '& .MuiPaper-root': {
+         width: '95%',
+         [theme.breakpoints.up('lg')]: {
+            width: '88%',
+         },
+         [theme.breakpoints.only('sm')]: {
+            width: '77%',
+         },
+      },
+
+      '& .center': {
+         display: 'flex',
+         justifyContent: 'center',
+         marginTop: '2%',
+         '& input': {
+            marginBottom: '2%',
+         },
+         '& p': {
+            fontWeight: 'bold',
+         },
+      },
       '& .MuiTextField-root': {
          margin: theme.spacing(1),
          width: '8ch',
-         [theme.breakpoints.only('sm')]: {
-            width: '15ch',
+         [theme.breakpoints.up('lg')]: {
+            width: '12ch',
          },
       },
       '& .MuiTextField-root:nth-child(2)': {

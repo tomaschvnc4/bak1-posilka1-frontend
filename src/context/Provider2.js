@@ -1,6 +1,6 @@
 import { useAuth0 } from '@auth0/auth0-react';
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Axios from 'axios';
 
 import { calendarInitState, userInitState, otherInitState } from './initialStates';
@@ -48,6 +48,9 @@ const AppProvider = ({ children }) => {
 
    const [flags, setFlags] = useState(initFlagss);
    const { user, getAccessTokenSilently, isAuthenticated } = useAuth0(); //isAuthenticated
+
+   //REFS as STATES
+   const openHodRef = useRef({ PonPia: [], SobNed: [] });
 
    // console.log('*USER', user);
    // console.log('*CALENDAR STATE', calendarState);
@@ -125,6 +128,7 @@ const AppProvider = ({ children }) => {
 
             if (!isEmtyObj(calSettings)) {
                // podmienka lebo isOpen() zavisi od nastavenia calSettings
+               //objOpen sa predtym naplna dnami, kt urcuju specificke OH ... a ak neobsahuje tento den tak mu nastavi bezne OH
                if (!newObjOpen[timestamp]) {
                   newObjOpen[timestamp] = Array.from(isOpen(day));
                }
@@ -159,19 +163,55 @@ const AppProvider = ({ children }) => {
    }
 
    function isOpen(day) {
-      const dayStr = capitalize(noDiacritics(day.format('dddd')));
-      const od = calSettings[`${dayStr}_od`];
-      const doo = calSettings[`${dayStr}_do`];
-      let tmp = [];
-      // console.log('PPPPPPPPPPPPPPPPPPP', calSettings);
-      arrTime.forEach((cas) => {
-         if (cas >= od && cas <= doo) {
-            tmp.push(true);
-         } else {
-            tmp.push(false);
+      const dayOfWeek = parseInt(day.format('E')); // <1-7>
+      let od, doo;
+      if (dayOfWeek <= 5 && dayOfWeek >= 1) {
+         //Pon - Pia
+         if (openHodRef.current.PonPia.length === 0) {
+            od = calSettings.PonPia_od;
+            doo = calSettings.PonPia_do;
+            let tmp = [];
+            arrTime.forEach((cas) => {
+               if (cas >= od && cas <= doo) {
+                  tmp.push(true);
+               } else {
+                  tmp.push(false);
+               }
+            });
+            openHodRef.current.PonPia = tmp;
          }
-      });
-      return tmp;
+         return openHodRef.current.PonPia;
+      } else {
+         //Sob - Ned
+         if (openHodRef.current.SobNed.length === 0) {
+            od = calSettings.SobNed_od;
+            doo = calSettings.SobNed_do;
+            let tmp = [];
+            arrTime.forEach((cas) => {
+               if (cas >= od && cas <= doo) {
+                  tmp.push(true);
+               } else {
+                  tmp.push(false);
+               }
+            });
+            openHodRef.current.SobNed = tmp;
+         }
+         return openHodRef.current.SobNed;
+      }
+
+      // const dayStr = capitalize(noDiacritics(day.format('dddd')));
+      // const od = calSettings[`${dayStr}_od`];
+      // const doo = calSettings[`${dayStr}_do`];
+      // let tmp = [];
+      // // console.log('PPPPPPPPPPPPPPPPPPP', calSettings);
+      // arrTime.forEach((cas) => {
+      //    if (cas >= od && cas <= doo) {
+      //       tmp.push(true);
+      //    } else {
+      //       tmp.push(false);
+      //    }
+      // });
+      // return tmp;
    }
 
    function isOpenSpecificOH() {
@@ -358,7 +398,7 @@ const AppProvider = ({ children }) => {
    async function fetchSettings() {
       const response = await Axios.get(`${serverUrl}/calendar/getCalendarSettings`);
       const data = response.data[0];
-      console.log('data:', data);
+      console.log('data_SETTINGS:', data);
       const values = Object.values(data);
       // console.log(values);
       let posunDay = data.maxNextDays;

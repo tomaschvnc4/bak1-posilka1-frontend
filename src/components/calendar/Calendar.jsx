@@ -9,13 +9,10 @@ const Calendar = () => {
    //    console.log(testT.toDate());
    //    console.log(testT.add(30, 'm').format('HH:mm'));
 
-   //prettier-ignore
    const { fetchRezervacie } = useGlobalContext();
 
    useEffect(() => {
       fetchRezervacie();
-      // setTime();
-      // setWeek();
    }, []);
 
    return (

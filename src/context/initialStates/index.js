@@ -23,6 +23,11 @@ export const calendarInitState = {
    konkretneDniOH: [], //[ {timestamp:4554..,od:'',do:''},{...},{},...] OH=otvaracie hodiny
 };
 
+/**
+ * objOpen -> objekt, kt ma kluc TIMESTAMP pre konkretny den a value je POLE v ktorych hodinach je otvorene
+ *
+ */
+
 export const userInitState = {
    dbName: '',
    telefon: '',

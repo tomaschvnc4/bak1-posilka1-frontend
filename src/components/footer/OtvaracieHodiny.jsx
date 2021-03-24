@@ -5,16 +5,16 @@ import { useGlobalContext } from '../../context/Provider2';
 
 const OtvaracieHodiny = () => {
    const { calSettings } = useGlobalContext();
-   const { Pondelok_od, Pondelok_do, Sobota_od, Sobota_do } = calSettings;
+   const { PonPia_od, PonPia_do, SobNed_od, SobNed_do } = calSettings;
    return (
       <div className={'footer-otvaracie-hodiny'}>
          <Typography variant='body1'>Pondelok-Piatok</Typography>
          <span>
-            {Pondelok_od}-{Pondelok_do}
+            {PonPia_od}-{PonPia_do}
          </span>
          <Typography variant='body1'>Sobota-Nedeľa</Typography>
          <span>
-            {Sobota_od}-{Sobota_do}
+            {SobNed_od}-{SobNed_do}
          </span>
       </div>
    );
