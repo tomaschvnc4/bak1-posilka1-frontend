@@ -13,21 +13,33 @@ const Links = () => {
    const classes = useStyles();
    const { isAuthenticated } = useAuth0();
    let linkSelected = useRef(1);
-   console.log(linkSelected.current);
    const location = useLocation();
 
-   let zhodaI = -1;
-   for (let i = 0; i < linksData.length; i++) {
-      const link = linksData[i];
+   // console.log('location', location);
+   let pathname = location.pathname;
 
-      let result = location.pathname.search(link.path);
-      if (result !== -1) {
-         zhodaI = link.id;
-         console.log(result, location.pathname, link.path, zhodaI);
-         break;
+   if (pathname === '/') {
+      linkSelected.current = 1;
+   } else {
+      pathname = pathname.slice(1);
+      // console.log('pathnameEDIT', pathname);
+
+      for (let i = 0; i < linksData.length; i++) {
+         const link = linksData[i];
+         if (link.path === '/' || link.path === undefined) {
+            // console.log(i, 'skip', link);
+            continue;
+         }
+         const result = pathname.match(link.path?.slice(1));
+         // console.log(i, 'link', link);
+         // console.log(i, 'result', result);
+         if (result != null) {
+            linkSelected.current = link.id;
+            break;
+         }
       }
    }
-   const auth = false;
+
    return (
       <>
          <ul className={clsx(`nav-links `, classes.root)}>
@@ -42,11 +54,7 @@ const Links = () => {
                               _class && _class,
                               linkSelected.current === id && 'active'
                            )}>
-                           {path && (
-                              <Link to={path} onClick={() => (linkSelected.current = id)}>
-                                 {name}
-                              </Link>
-                           )}
+                           {path && <Link to={path}>{name}</Link>}
                         </li>
                      )
                   );
@@ -55,11 +63,7 @@ const Links = () => {
                      <li
                         key={id}
                         className={clsx(_class && _class, linkSelected.current === id && 'active')}>
-                        {path && (
-                           <Link to={path} onClick={() => (linkSelected.current = id)}>
-                              {name}
-                           </Link>
-                        )}
+                        {path && <Link to={path}>{name}</Link>}
                      </li>
                   );
                }

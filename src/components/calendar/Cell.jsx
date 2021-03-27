@@ -9,34 +9,24 @@ import { useGlobalContext } from '../../context/Provider2';
 // import { useGlobalContext } from '../../_contex';
 
 const Cell = ({ timestamp, index }) => {
-   // const { calendar, selectTime } = useGlobalContext();
-   const {
-      kapacity,
-      userSelect,
-      arrReserve,
-      selectTime,
-      objOpen,
-      calSettings,
-   } = useGlobalContext();
+   //prettier-ignore
+   const {userSelect,arrReserve,selectTime,objOpen, calSettings,} = useGlobalContext();
 
    const { minI, maxI, cells } = userSelect[timestamp];
+   const { dennyLimit } = calSettings;
    const amount = arrReserve[timestamp][index];
    const isOpen = objOpen[timestamp][index];
-   // const selectedFirstIndex = userSelect[timestamp]?.findIndex((item) => item === true);
-   // console.log(selectedFirstIndex);
+
+   let aktLimit = 0;
+   if (minI != -1 || maxI != -1) {
+      aktLimit = maxI - minI + 1;
+   }
+
    let disableBtn = true;
    let isFree = false;
-   // if (selectedFirstIndex === -1) {
-   //    disableBtn = false;
-   // } else {
-   //    if (selectedFirstIndex === index) {
-   //       disableBtn = false;
-   //    }
-   //    if (selectedFirstIndex + 1 === index || selectedFirstIndex - 1 === index) {
-   //       disableBtn = false;
-   //    }
-   // }
-   // if (amount < kapacity) {
+
+   //vychadzam zo stavu ze je obsadene (isFree=F) a ze je disabled
+   //menim iba pre tie, pre ktore to neplati IF nizsie
    if (amount < calSettings.kapacita) {
       isFree = true;
       if (minI === -1) {
@@ -54,6 +44,10 @@ const Cell = ({ timestamp, index }) => {
          disableBtn = false;
          isFree = true;
       }
+   }
+   //ak som prekrocil denny limit tak chcem mat tlacidlo disabled ale ktore je selected tak nehat aktivne
+   if (aktLimit >= dennyLimit && cells[index] === false) {
+      disableBtn = true;
    }
 
    return (

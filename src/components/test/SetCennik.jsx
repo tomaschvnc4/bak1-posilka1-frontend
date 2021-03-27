@@ -1,19 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { Grid, TextField, Axios, Paper } from './_import';
-
-import {
-   TableRow,
-   makeStyles,
-   Table,
-   TableBody,
-   TableCell,
-   TableContainer,
-   withStyles,
-   IconButton,
-} from '@material-ui/core';
-import CreateIcon from '@material-ui/icons/Create';
-import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
+//prettier-ignore
+import { Grid, TextField, Axios, Paper, TableRow, makeStyles, Table, TableBody, TableCell, TableContainer, withStyles, IconButton, CreateIcon, DeleteForeverRoundedIcon,} from './_import';
 
 import { useGlobalContext } from '../../context/Provider2';
 import { useForm } from 'react-hook-form';
@@ -35,14 +23,9 @@ const SetCennik = () => {
       console.log('dataSubmit', data);
       const { id: poradie, title, price } = data;
       const { id } = itemToEditRef.current || '';
-      console.log(poradie, title, price);
-      console.log('REF', JSON.stringify(itemToEditRef));
 
       const newItem = { id, poradie, title, price };
-      console.log('newItem', newItem);
-      // console.log('newCennik before', newCennik);
-      // newCennik.splice(parseInt(id), 0, { title, price });
-      // console.log('newCennik after', newCennik);
+
       await Axios.post(`${serverUrl}/cennik/change`, { payload: newItem });
       // setCennik(newCennik);
       reset();
@@ -96,7 +79,7 @@ const SetCennik = () => {
          className={classes.root}>
          <Paper elevation={2}>
             <div className='center'>
-               <p>Konkretny den</p>
+               <p>Cenník</p>
             </div>
             <Grid
                container

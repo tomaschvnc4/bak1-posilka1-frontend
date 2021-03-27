@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from 'react';
 
 import { Axios, TextField, Autocomplete, Grid, makeStyles, Paper } from './_import';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { timeSlots } from '../../helpers';
 
 import { useGlobalContext } from '../../context/Provider2';
+import { Checkbox, FormControlLabel } from '@material-ui/core';
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
 
 const SetOH = () => {
    const classes = useStyles();
-   const { register, handleSubmit, setValue, errors } = useForm(); // potom skusit cez controll aby bolo mozne mat defaul hodnotu bez prerendrovana vzdy pri zmene
+   const { register, handleSubmit, setValue, errors, getValues, watch } = useForm(); // potom skusit cez controll aby bolo mozne mat defaul hodnotu bez prerendrovana vzdy pri zmene
    const { calSettings, setCalSettings, setPosunDay } = useGlobalContext();
 
    const [newValues, setNewValues] = useState({});
+   const [checked, setChecked] = useState(false);
 
    const myOnSubmit = (data) => {
       console.log('submit:', data);
 
-      const dataToSend = Object.values(data);
+      console.log(checked);
+      const dataToSend = [...Object.values(data), checked];
       console.log(dataToSend);
       Axios.post(`${serverUrl}/calendar/editHodiny`, { payload: dataToSend });
 
@@ -34,20 +37,8 @@ const SetOH = () => {
    // const dni = ['Pondelok - Piatok', 'Sobota - Nedela'];
    // const dni = ['Pondelok', 'Utorok', 'Streda', 'Stvrtok', 'Piatok', 'Sobota', 'Nedela'];
 
-   // const fetchSettings = async () => {
-   //    const response = await Axios.get(`${serverUrl}/calendar/getCalendarSettings`);
-   //    const data = response.data[0];
-   //    console.log('data:', data);
-   //    // Object.keys(data)
-   //    // setDbData(data);
-   //    setCalSettings(data);
-   // };
-
    useEffect(() => {
-      // fetchSettings();
-      // console.log('EFFECT--setNewCalSettings');
       setNewValues({ ...calSettings });
-      // setNewCalSettings({ ...calSettings });
    }, [calSettings]);
 
    useEffect(() => {
@@ -55,19 +46,9 @@ const SetOH = () => {
       setValue('kapacita', calSettings.kapacita);
       setValue('maxNextDays', calSettings.maxNextDays);
       setValue('dennyLimit', calSettings.dennyLimit);
-      // setValue('PonPia_od', calSettings.PonPia_od);
+      setChecked(!!calSettings.enableKalendar);
    }, [calSettings]);
 
-   // const capitalize = (s) => {
-   //    if (typeof s !== 'string') return '';
-   //    return s.charAt(0).toUpperCase() + s.slice(1);
-   // };
-
-   // const cas = () => {
-   //    const today = moment();
-   //    console.log('FORMAT', capitalize(today.format('dddd')));
-   // };
-   // cas();
    console.count('renderCount - <SetOH />');
    return (
       <Grid
@@ -81,7 +62,7 @@ const SetOH = () => {
          <Grid container justify='center'>
             <Paper elevation={2}>
                <div className='center'>
-                  <p>Kalendar</p>
+                  <p>Kalendár</p>
                </div>
                <form onSubmit={handleSubmit(myOnSubmit)}>
                   <Grid container justify='center'>
@@ -133,7 +114,7 @@ const SetOH = () => {
                               size='small'
                               style={{ width: 150, margin: '5px 0 5px 0' }}
                               options={timeSlots}
-                              value={newValues[keyOd] ? `${newValues[keyOd]}` : ''}
+                              value={newValues[keyOd] || ''}
                               onChange={(e, newValue) => {
                                  console.log('newVal:', newValue);
                                  if (newValue === null || newValue === '') {
@@ -173,7 +154,7 @@ const SetOH = () => {
                               size='small'
                               options={timeSlots}
                               getOptionDisabled={(option) => option <= newValues[keyOd]}
-                              value={newValues[keyDo] ? `${newValues[keyDo]}` : ''}
+                              value={newValues[keyDo] || ''}
                               onChange={(e, newValue) => {
                                  console.log('newVal:', newValue);
                                  setNewValues({ ...newValues, [keyDo]: newValue });
@@ -198,6 +179,19 @@ const SetOH = () => {
                         </Grid>
                      );
                   })}
+                  <div className='center'>
+                     <FormControlLabel
+                        control={
+                           <Checkbox
+                              name='enableKalendar'
+                              checked={checked}
+                              color='primary'
+                              onChange={() => setChecked(!checked)}
+                           />
+                        }
+                        label='Povoliť rezervácie'
+                     />
+                  </div>
                   <div className='center'>
                      <input type='submit' />
                   </div>
@@ -261,22 +255,3 @@ const MenuProps = {
       },
    },
 };
-
-{
-   /* <Controller
-               render={(props) => (
-                  <Autocomplete
-                     {...props}
-                     options={timeSlots}
-                     getOptionLabel={(option) => option}
-                     renderOption={(option) => <span>{option}</span>}
-                     renderInput={(params) => (
-                        <TextField {...params} label='Od3:' variant='outlined' />
-                     )}
-                     onChange={(_, data) => props.onChange(data)}
-                  />
-               )}
-               name='od3'
-               control={control}
-            /> */
-}

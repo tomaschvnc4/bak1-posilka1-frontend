@@ -8,20 +8,14 @@ import { useGlobalContext } from '../../context/Provider2';
 import Loading2 from '../loading2';
 
 const Cal_Table = () => {
-   const { arrWeek: arrDays, arrTime, calSettings, zrusitVyber } = useGlobalContext();
-
    const classes = useStyles();
+   const { arrWeek: arrDays, arrTime, calSettings, zrusitVyber, userSelect } = useGlobalContext();
 
    return (
-      <div>
-         {/* <PreviewFrame
-            style={{
-               width: 'inherit',
-               height: '500px',
-            }}> */}
+      <div className={classes.root}>
          {<Loading2 />}
          <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label='customized table'>
+            <Table className={classes.table} aria-label='customized table' stickyHeader>
                <TableHead>
                   <TableRow>
                      <StyledTableCell>#</StyledTableCell>
@@ -50,8 +44,14 @@ const Cal_Table = () => {
                      </StyledTableCell>
                      {arrDays.map((day, index) => {
                         const timestamp = day.valueOf();
+                        const { minI, maxI } = userSelect[timestamp];
+                        let aktLimit = 0;
+                        if (minI != -1 || maxI != -1) {
+                           aktLimit = maxI - minI + 1;
+                        }
                         return (
                            <StyledTableCell key={index}>
+                              {`${aktLimit} / ${calSettings.dennyLimit}`}
                               <Typography onClick={() => zrusitVyber(timestamp)}>Zrusit</Typography>
                            </StyledTableCell>
                         );
@@ -59,12 +59,12 @@ const Cal_Table = () => {
                   </StyledTableRow>
                   {arrTime.map((time, index) => {
                      let otvorene =
-                        time >= calSettings.workingMinT && time <= calSettings.workingMaxT;
+                        time >= calSettings.workingMinT && time < calSettings.workingMaxT;
                      return (
                         otvorene && (
                            <StyledTableRow key={`${index}${time}`}>
                               <StyledTableCell>
-                                 <b>{time}</b>
+                                 <b>{`${time}-${arrTime[index + 1]}`}</b>
                               </StyledTableCell>
                               {arrDays.map((day) => {
                                  const timestamp = day.valueOf();
@@ -102,6 +102,7 @@ const StyledTableCell = withStyles((theme) => ({
    },
    root: {
       textAlign: 'center',
+      padding: 8,
    },
 }))(TableCell);
 
@@ -114,8 +115,9 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 const useStyles = makeStyles({
-   table: {
-      //   minWidth: 1,
-      //   maxWidth: 1,
+   root: {
+      '& .MuiTableContainer-root': {
+         maxHeight: 550,
+      },
    },
 });

@@ -25,7 +25,7 @@ function noDiacritics(s) {
  * Vytvorenie zoznamu casov pre nastavenie otvaracich hodin
  */
 const timeSlots = [
-   '',
+   // '',
    ...Array.from(new Array(16 * 2 + 1)).map((_, index) => {
       index += 12; //zmena ohranicenia
       return `${index < 20 ? '0' : ''}${Math.floor(index / 2)}:${index % 2 === 0 ? '00' : '30'}`;

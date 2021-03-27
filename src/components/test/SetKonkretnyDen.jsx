@@ -7,12 +7,12 @@ import { useForm, Controller } from 'react-hook-form';
 
 import { useGlobalContext } from '../../context/Provider2';
 
+import { timeSlots } from '../../helpers';
+
 import MomentUtils from '@date-io/moment';
 import moment from 'moment';
 import 'moment/locale/sk';
-import { timeSlots } from '../../helpers';
-import { IconButton, Typography } from '@material-ui/core';
-import { DeleteForeverRoundedIcon } from '../calendar/_imports';
+import { Checkbox, FormControlLabel } from '@material-ui/core';
 moment.locale('sk');
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
@@ -29,10 +29,12 @@ const SetKonkretnyDen = () => {
    const [indexOd, setIndexOd] = useState(-1);
    const [error, setError] = useState({ state: false, mes: '' });
    const [nacitatZonam, setNacitatZonam] = useState(true);
+   const [checked, setChecked] = useState(false);
 
    const myOnSubmit = async (data, e) => {
       console.log('submit:', data);
       data.datePicker = data.datePicker.valueOf();
+      data.zavrete = checked;
       console.log(data.datePicker);
       if (isNaN(data.datePicker)) {
          console.log('ERROR');
@@ -43,6 +45,7 @@ const SetKonkretnyDen = () => {
       reset();
       setKonkretnyDenCas({ od: '', doo: '' });
       setError({ state: false, mes: '' });
+      console.log('dataToSend:', data);
       await Axios.post(`${serverUrl}/calendar/add-zmena-otvorenie-specificky-den`, {
          payload: data,
       });
@@ -54,7 +57,7 @@ const SetKonkretnyDen = () => {
    async function getZoznamOH() {
       const response = await Axios.get(`${serverUrl}/calendar/get-zmena-otvorenie-specificky-den`);
       const data = response.data;
-      console.log('getZoznamOH-data', data);
+
       setKonkretneDniOH(response.data);
    }
 
@@ -91,12 +94,13 @@ const SetKonkretnyDen = () => {
          className={classes.root}>
          <Paper elevation={2}>
             <div className='center'>
-               <p>Konkretny den</p>
+               <p>Konkrétny deň</p>
             </div>
             <Grid container component='section' alignItems='center' direction='column'>
                <form onSubmit={handleSubmit(myOnSubmit)}>
                   <Grid container alignItems='center' direction='column'>
                      {error.state && <p color='secondary'>{error.mes}</p>}
+
                      <Controller
                         name='datePicker'
                         control={control}
@@ -115,25 +119,58 @@ const SetKonkretnyDen = () => {
                         )}
                      />
 
+                     <div className='center'>
+                        <FormControlLabel
+                           control={
+                              <Checkbox
+                                 name='zavrete'
+                                 checked={checked}
+                                 color='primary'
+                                 onChange={() => setChecked(!checked)}
+                              />
+                           }
+                           label='Zavreté'
+                        />
+                     </div>
                      <Autocomplete
+                        disabled={checked}
                         size='small'
                         style={{ width: 150, margin: '5px 0 5px 0' }}
                         options={timeSlots}
                         value={konkretnyDenCas.od || ''}
                         onChange={(e, newValue) => {
                            console.log('newVal:', newValue);
-                           setIndexOd(timeSlots.indexOf(newValue));
-                           newValue === null
-                              ? setKonkretnyDenCas({ ...konkretnyDenCas, ['od']: '' })
-                              : setKonkretnyDenCas({ ...konkretnyDenCas, ['od']: newValue });
+                           if (newValue === null || newValue === '') {
+                              console.log('null');
+                              setKonkretnyDenCas({
+                                 zavrete: false,
+                                 od: '',
+                                 doo: '',
+                              });
+                           } else if (newValue >= konkretnyDenCas.doo) {
+                              setKonkretnyDenCas({
+                                 zavrete: false,
+                                 od: newValue,
+                                 doo: '',
+                              });
+                           } else {
+                              setKonkretnyDenCas({
+                                 ...konkretnyDenCas,
+                                 od: newValue,
+                              });
+                           }
                         }}
                         renderInput={(params) => (
                            <TextField
                               {...params}
                               label='Od:'
                               variant='outlined'
-                              inputRef={register({ required: 'Pole nesmie byť prázdne' })}
-                              error={errors.hasOwnProperty('od')}
+                              inputRef={register(
+                                 checked
+                                    ? { required: false }
+                                    : { required: 'Pole nesmie byť prázdne' }
+                              )}
+                              error={checked ? false : errors.hasOwnProperty('od')}
                               helperText={errors['od']?.message}
                               name='od'
                            />
@@ -141,10 +178,13 @@ const SetKonkretnyDen = () => {
                      />
 
                      {/* <p> - </p> */}
+                     {console.log('konkretny dencas', konkretnyDenCas)}
                      <Autocomplete
-                        // disabled={calSettings[keyOd] ? false : true}
+                        disabled={checked ? true : konkretnyDenCas.od ? false : true}
+                        // disabled={checked}
                         size='small'
                         options={timeSlots}
+                        getOptionDisabled={(option) => option <= konkretnyDenCas.od}
                         style={{ width: 150, margin: '5px 0 5px 0' }}
                         value={konkretnyDenCas.doo || ''}
                         onChange={(e, newValue) => {
@@ -153,17 +193,17 @@ const SetKonkretnyDen = () => {
                               ? setKonkretnyDenCas({ ...konkretnyDenCas, doo: '' })
                               : setKonkretnyDenCas({ ...konkretnyDenCas, doo: newValue });
                         }}
-                        getOptionDisabled={(option) => option === indexOd}
                         renderInput={(params) => (
                            <TextField
                               {...params}
                               label='Do:'
                               variant='outlined'
-                              inputRef={register({
-                                 required: 'Pole nesmie byť prázdne',
-                                 // validate: (value) => value === konkretnyDenCas.od || 'mensie',
-                              })}
-                              error={errors.hasOwnProperty('do')}
+                              inputRef={register(
+                                 checked
+                                    ? { required: false }
+                                    : { required: 'Pole nesmie byť prázdne' }
+                              )}
+                              error={checked ? false : errors.hasOwnProperty('do')}
                               helperText={errors['do']?.message}
                               name='do'
                            />
@@ -177,13 +217,16 @@ const SetKonkretnyDen = () => {
             </Grid>
             <Grid container component='section' alignItems='center' direction='column'>
                {konkretneDniOH.map((record) => {
-                  const { timestamp, od, do: doo } = record;
+                  const { timestamp, od, do: doo, zavrete } = record;
                   return (
                      timestamp && (
                         <article style={{ display: 'flex' }} key={timestamp}>
                            <p>{moment(timestamp).format('dddd-DD.MM.YYYY')}&nbsp;</p>
                            <p>{od}&nbsp;</p>
                            <p>{doo}</p>
+                           <p>
+                              <b>{!!zavrete && 'zavreté'}</b>
+                           </p>
                            <p onClick={() => deleteOH(timestamp)}>&nbsp;zmazat</p>
                            {/* <IconButton onClick={() => deleteOH(timestamp)}>
                               <DeleteForeverRoundedIcon color='secondary' size='small' />

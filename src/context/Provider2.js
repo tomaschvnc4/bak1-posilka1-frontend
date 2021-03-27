@@ -24,14 +24,14 @@ const initFlagss = {
 const AppProvider = ({ children }) => {
    // CELENDAR
    const [dateVal, setDateVal] = useState(calendarInitState.dateVal);
-   const [startDay, setStartDay] = useState(calendarInitState.startDay);
-   const [endDay, setEndDay] = useState(calendarInitState.endDay);
+   // const [startDay, setStartDay] = useState(calendarInitState.startDay);
+   // const [endDay, setEndDay] = useState(calendarInitState.endDay);
    const [arrWeek, setArrWeek] = useState(calendarInitState.arrWeek);
    const [arrTime, setArrTime] = useState(calendarInitState.arrTime);
    const [arrReserve, setArrReserve] = useState(calendarInitState.arrReserve);
    const [userSelect, setUserSelect] = useState(calendarInitState.userSelect);
    const [maxNextDays, setMaxNextDays] = useState(calendarInitState.maxNextDays); //treba prerobit na data v settings
-   const [posunDay, setPosunDay] = useState(calendarInitState.posunDay);
+   // const [posunDay, setPosunDay] = useState(calendarInitState.posunDay);
    const [kapacity, setKapacity] = useState(calendarInitState.kapacity); //treba prerobit na data v settings
    const [isLoadingCal, setIsLoadingCal] = useState(false);
 
@@ -44,13 +44,16 @@ const AppProvider = ({ children }) => {
    //USER STATE
    const [dbUser, setDbUser] = useState(userInitState);
    //
-   const [calendarState, setCalState] = useState(calendarInitState);
+   // const [calendarState, setCalState] = useState(calendarInitState);
 
    const [flags, setFlags] = useState(initFlagss);
    const { user, getAccessTokenSilently, isAuthenticated } = useAuth0(); //isAuthenticated
-
+   const [alert, setAlert] = useState({ open: false, status: 0 });
    //REFS as STATES
    const openHodRef = useRef({ PonPia: [], SobNed: [] });
+   const startDayRef = useRef(calendarInitState.startDay);
+   const endDayRef = useRef(calendarInitState.endDay);
+   const posunDayRef = useRef(calendarInitState.posunDay);
 
    // console.log('*USER', user);
    // console.log('*CALENDAR STATE', calendarState);
@@ -61,6 +64,9 @@ const AppProvider = ({ children }) => {
    // function stopLoading() {
    //    setCalState({ ...calendarState, loading: false });
    // }
+
+   console.log('userSelect', userSelect);
+   console.log('calSettings', calSettings);
 
    function isEmtyObj(obj) {
       return Object.keys(obj).length === 0; //TRUE or FALSE
@@ -108,7 +114,8 @@ const AppProvider = ({ children }) => {
       const length = arrTime.length;
       if (length !== 0) {
          for (let i = 0; i < 7; i++) {
-            let day = startDay.clone().add(i, 'days');
+            // let day = startDay.clone().add(i, 'days');
+            let day = startDayRef.current.clone().add(i, 'days');
             const timestamp = day.valueOf();
             // console.log(capitalize(noDiacritics(day.format('dddd'))));
             arrWeek.push(day);
@@ -219,13 +226,16 @@ const AppProvider = ({ children }) => {
       let newObjOpen = { ...objOpen };
       console.log('objOpen', objOpen);
       konkretneDniOH.forEach((record) => {
-         const { od, do: doo, timestamp } = record;
+         const { od, do: doo, timestamp, zavrete } = record;
          //ak objOpen nema taku polozku vytvori novu s novym polom
          //ak ma objOPen taku polozku upravi existujucu
-
-         newObjOpen[timestamp] = arrTime.map((cas) => {
-            return cas >= od && cas <= doo ? true : false;
-         });
+         if (zavrete) {
+            newObjOpen[timestamp] = Array.from({ length: arrTime.length }, () => false);
+         } else {
+            newObjOpen[timestamp] = arrTime.map((cas) => {
+               return cas >= od && cas <= doo ? true : false;
+            });
+         }
          // console.log('newObjOpen1', JSON.stringify(newObjOpen));
       });
       setObjOpen(newObjOpen);
@@ -236,27 +246,36 @@ const AppProvider = ({ children }) => {
       setIsLoadingCal(true);
 
       const { maxNextDays } = calSettings;
-      console.log('chnageDay');
+      let zmena = false;
+      let posunDay = posunDayRef.current;
+
       if (type === 'next') {
          if (posunDay > 0) {
-            endDay.add(1, 'days');
-            startDay.add(1, 'days');
-            setPosunDay((prev) => prev - 1);
+            endDayRef.current.add(1, 'days');
+            startDayRef.current.add(1, 'days');
+            posunDayRef.current = posunDay - 1;
+            zmena = true;
          }
       }
       if (type === 'prev') {
          if (posunDay < maxNextDays) {
-            endDay.subtract(1, 'days');
-            startDay.subtract(1, 'days');
-            setPosunDay((prev) => prev + 1);
+            endDayRef.current.subtract(1, 'days');
+            startDayRef.current.subtract(1, 'days');
+            posunDayRef.current = posunDay + 1;
+            zmena = true;
          }
       }
       if (type === 'today') {
-         setStartDay(dateVal.clone());
-         setEndDay(dateVal.clone().add(6, 'days'));
-         setPosunDay(maxNextDays);
+         startDayRef.current = dateVal.clone();
+         endDayRef.current = dateVal.clone().add(6, 'days');
+         posunDayRef.current = maxNextDays;
+         zmena = true;
       }
-      setWeek2();
+      if (zmena) {
+         setWeek2();
+      } else {
+         setIsLoadingCal(false);
+      }
    }
 
    function selectTime(timestamp, index) {
@@ -382,7 +401,7 @@ const AppProvider = ({ children }) => {
       console.log('send:');
       console.log(submitData);
       if (!isEmtyObj(submitData)) {
-         await Axios.post(
+         const response = await Axios.post(
             `${serverUrl}/calendar/add`,
             { payload: submitData },
             {
@@ -391,6 +410,9 @@ const AppProvider = ({ children }) => {
                },
             }
          );
+         if (response.status == 200) {
+            setAlert({ status: 200, open: true });
+         }
       }
       // TODO stop loading
    }
@@ -413,7 +435,8 @@ const AppProvider = ({ children }) => {
       });
 
       setCalSettings({ ...data, minT, maxT });
-      setPosunDay(posunDay);
+      // setPosunDay(posunDay);
+      posunDayRef.current = posunDay;
 
       setFlags({ ...flags, settingsFetched: true });
    }
@@ -478,8 +501,8 @@ const AppProvider = ({ children }) => {
          value={{
             ///kalendar
             dateVal,
-            startDay,
-            endDay,
+            startDayRef,
+            endDayRef,
             arrWeek,
             arrTime,
             arrReserve,
@@ -494,8 +517,7 @@ const AppProvider = ({ children }) => {
             setCennik,
             // submitDataTest,
             maxNextDays,
-            posunDay,
-            setPosunDay,
+            posunDayRef,
             kapacity,
             isLoadingCal,
             //profil
@@ -507,6 +529,8 @@ const AppProvider = ({ children }) => {
             fetchRezervacie,
             submitReserve,
             zrusitVyber,
+            alert,
+            setAlert,
          }}>
          {children}
       </AppContext.Provider>

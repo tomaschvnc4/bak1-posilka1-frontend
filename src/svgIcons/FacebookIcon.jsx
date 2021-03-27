@@ -4,8 +4,8 @@ import React from 'react';
  * parameter style={{width, height, color1, color2}}
  */
 const FacebookIcon = (props) => {
-   console.log(props);
-   console.log(props.style);
+   // console.log(props);
+   // console.log(props.style);
    const { width, height } = props.style || {};
    return (
       // <svg

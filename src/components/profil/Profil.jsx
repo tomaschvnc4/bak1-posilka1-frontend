@@ -5,6 +5,7 @@ import {
    Grid,
    IconButton,
    makeStyles,
+   Paper,
    Table,
    TableBody,
    TableCell,
@@ -24,6 +25,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useGlobalContext } from '../../context/Provider2';
+import AlertBox from '../AlertBox';
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
 
@@ -38,7 +40,7 @@ const Profil = () => {
    let { picture } = user;
 
    return (
-      <main className='kontakt-main-container profil'>
+      <Paper component='main' elevation={10} className='kontakt-main-container profil'>
          <Typography variant='h3'>
             <span>PROFIL</span>
          </Typography>
@@ -106,21 +108,24 @@ const Profil = () => {
                </TableContainer>
             </Grid>
          </Grid>
-      </main>
+      </Paper>
    );
 };
 
 export default Profil;
 
 const schemaMeno = yup.object().shape({
-   meno: yup.string().matches(/^[a-zA-ZÀ-ž ]*$/, 'Meno obsahuje nepovolé znaky'),
+   meno: yup
+      .string()
+      // .min(8, 'Minimálne 8 znakov!')
+      .matches(/^[a-zA-ZÀ-ž ]*$/, 'Meno obsahuje nepovolé znaky!'),
 });
 const schemaTelefon = yup.object().shape({
    telefon: yup
       .string()
       .matches(
          /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/,
-         'Nesprávny formát'
+         'Nesprávny formát!'
       ),
 });
 
@@ -137,6 +142,8 @@ const EditField = (props) => {
    });
    const { getAccessTokenSilently } = useAuth0();
    const { dbUser, setDbUser } = useGlobalContext();
+
+   // const [isOpen, setIsOpen] = useState(false);
 
    async function submitEditItem(data) {
       if (name !== '' || data !== '') {
@@ -163,6 +170,7 @@ const EditField = (props) => {
 
    return (
       <div>
+         {/* {isOpen && <AlertBox />} */}
          <form style={{ display: 'inline-flex' }} onSubmit={handleSubmit(submitEditItem)}>
             <TextField
                label={`${capitalize(name)}`}

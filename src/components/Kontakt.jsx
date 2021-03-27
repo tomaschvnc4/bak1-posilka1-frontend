@@ -50,7 +50,7 @@ const Kontakt = () => {
                      <MailOutlineRoundedIcon />
                   </Grid>
                   <Grid item xs={9} sm={6}>
-                     <Typography variant='h6'>junglegym@gmail.com</Typography>
+                     <Typography variant='h6'>junglegymlm@gmail.com</Typography>
                   </Grid>
                </Grid>
 
@@ -59,7 +59,7 @@ const Kontakt = () => {
                      <PhoneAndroidRoundedIcon />
                   </Grid>
                   <Grid item xs={9} sm={6}>
-                     <Typography variant='h6'>+421123456789</Typography>
+                     <Typography variant='h6'>+421904868840</Typography>
                   </Grid>
                </Grid>
                <Paper elevation={5} className='kontakt-paper'>
