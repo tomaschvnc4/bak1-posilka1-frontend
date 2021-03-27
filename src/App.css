@@ -334,6 +334,10 @@ CENNIK
    background-color: var(--clr-underLine-Orange);
 } */
 
+.uvod .cennik {
+   width: inherit !important;
+}
+
 .cennik .MuiTypography-h5 {
    color: var(--clr-nav-orange);
 }
