@@ -37,6 +37,8 @@ const data = [
 const BREAKPOINT = 'sm';
 const Sluzby = () => {
    const classes = useStyles();
+
+   console.count('render Sluzby');
    return (
       <main className='kontakt-main-container'>
          <Grid container className={classes.root} spacing={3}>
@@ -110,6 +112,9 @@ const useStyles = makeStyles((theme) => ({
          },
          boxShadow:
             '0px 10px 13px -6px rgb(0 0 0 / 20%), 0px 20px 31px 3px rgb(0 0 0 / 14%), 0px 8px 36px 7px rgb(0 0 0 / 12%);',
+      },
+      '& h3': {
+         WebkitTextStroke: '0px black',
       },
    },
 

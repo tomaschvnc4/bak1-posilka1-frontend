@@ -1,10 +1,12 @@
 import { useAuth0 } from '@auth0/auth0-react';
 
 import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useMediaQuery, useTheme } from '@material-ui/core';
 import Axios from 'axios';
 
 import { calendarInitState, userInitState, otherInitState } from './initialStates';
 // import { calendarInitState, nextInitState, userInitState } from './initialStates';
+import { isEmtyObj } from '../helpers';
 
 import moment from 'moment';
 import 'moment/locale/sk';
@@ -24,16 +26,14 @@ const initFlagss = {
 const AppProvider = ({ children }) => {
    // CELENDAR
    const [dateVal, setDateVal] = useState(calendarInitState.dateVal);
-   // const [startDay, setStartDay] = useState(calendarInitState.startDay);
-   // const [endDay, setEndDay] = useState(calendarInitState.endDay);
    const [arrWeek, setArrWeek] = useState(calendarInitState.arrWeek);
    const [arrTime, setArrTime] = useState(calendarInitState.arrTime);
    const [arrReserve, setArrReserve] = useState(calendarInitState.arrReserve);
    const [userSelect, setUserSelect] = useState(calendarInitState.userSelect);
    const [maxNextDays, setMaxNextDays] = useState(calendarInitState.maxNextDays); //treba prerobit na data v settings
-   // const [posunDay, setPosunDay] = useState(calendarInitState.posunDay);
    const [kapacity, setKapacity] = useState(calendarInitState.kapacity); //treba prerobit na data v settings
-   const [isLoadingCal, setIsLoadingCal] = useState(false);
+   const [isLoadingCal, setIsLoadingCal] = useState(true);
+   const [isLoadingCalData, setIsLoadingCalData] = useState(true);
 
    const [calSettings, setCalSettings] = useState(calendarInitState.calSettings);
    const [objOpen, setObjOpen] = useState(calendarInitState.objOpen);
@@ -43,44 +43,22 @@ const AppProvider = ({ children }) => {
 
    //USER STATE
    const [dbUser, setDbUser] = useState(userInitState);
-   //
-   // const [calendarState, setCalState] = useState(calendarInitState);
 
-   const [flags, setFlags] = useState(initFlagss);
+   const flagsRef = useRef(initFlagss);
    const { user, getAccessTokenSilently, isAuthenticated } = useAuth0(); //isAuthenticated
-   const [alert, setAlert] = useState({ open: false, status: 0 });
+
    //REFS as STATES
    const openHodRef = useRef({ PonPia: [], SobNed: [] });
    const startDayRef = useRef(calendarInitState.startDay);
    const endDayRef = useRef(calendarInitState.endDay);
    const posunDayRef = useRef(calendarInitState.posunDay);
+   const calendarLengthRef = useRef(calendarInitState.calendarLength);
 
-   // console.log('*USER', user);
-   // console.log('*CALENDAR STATE', calendarState);
+   // console.log('userSelect', userSelect);
+   // console.log('calSettings', calSettings);
 
-   // function loading() {
-   //    setCalState({ ...calendarState, loading: true });
-   // }
-   // function stopLoading() {
-   //    setCalState({ ...calendarState, loading: false });
-   // }
-
-   console.log('userSelect', userSelect);
-   console.log('calSettings', calSettings);
-
-   function isEmtyObj(obj) {
-      return Object.keys(obj).length === 0; //TRUE or FALSE
-   }
-
-   function capitalize(s) {
-      if (typeof s !== 'string') return '';
-      return s.charAt(0).toUpperCase() + s.slice(1);
-   }
-
-   function noDiacritics(s) {
-      if (typeof s !== 'string') return '';
-      return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-   }
+   const theme = useTheme();
+   const isMobile = useMediaQuery(theme.breakpoints.only('xs'));
 
    ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -93,9 +71,7 @@ const AppProvider = ({ children }) => {
          arrTime.push(tmpTime.format('HH:mm'));
       }
       setArrTime(arrTime);
-      // setFlags({ ...flags, timeSeted: true });
-      _setFlags('timeSeted', true);
-
+      flagsRef.current.timeSeted = true;
       console.log('setTime END');
    }
 
@@ -108,12 +84,13 @@ const AppProvider = ({ children }) => {
       const { minT, maxT } = calSettings;
       let workingMinT = '23:00';
       let workingMaxT = '01:00';
-      // console.log('ZACIATOK objOpen', objOpen);
-      // console.log('ZACIATOK newObjOpen', JSON.stringify(newObjOpen));
+
+      const { calendarLength, calendarLengthXS } = calendarInitState;
+      let calendarLengthTMP = isMobile ? calendarLengthXS : calendarLength;
 
       const length = arrTime.length;
       if (length !== 0) {
-         for (let i = 0; i < 7; i++) {
+         for (let i = 0; i < calendarLengthTMP; i++) {
             // let day = startDay.clone().add(i, 'days');
             let day = startDayRef.current.clone().add(i, 'days');
             const timestamp = day.valueOf();
@@ -151,13 +128,6 @@ const AppProvider = ({ children }) => {
          if (workingMinT >= minT) workingMinT = minT;
          if (workingMaxT <= maxT) workingMaxT = maxT;
 
-         // console.log('arrReserve', arrReserve);
-         // console.log('newReserve', newReserve);
-         // console.log('userSelect', userSelect);
-         // console.log('newuserSelect', newUserSelect);
-         // console.log('objOpen', objOpen);
-         // console.log('newObjOpen', JSON.stringify(newObjOpen));
-
          console.log('END SET_WEEK');
          setArrWeek(arrWeek);
          setArrReserve(newReserve);
@@ -166,7 +136,7 @@ const AppProvider = ({ children }) => {
          setCalSettings({ ...calSettings, workingMinT, workingMaxT });
       }
 
-      setIsLoadingCal(false);
+      setIsLoadingCalData(() => false);
    }
 
    function isOpen(day) {
@@ -179,7 +149,7 @@ const AppProvider = ({ children }) => {
             doo = calSettings.PonPia_do;
             let tmp = [];
             arrTime.forEach((cas) => {
-               if (cas >= od && cas <= doo) {
+               if (cas >= od && cas < doo) {
                   tmp.push(true);
                } else {
                   tmp.push(false);
@@ -195,7 +165,7 @@ const AppProvider = ({ children }) => {
             doo = calSettings.SobNed_do;
             let tmp = [];
             arrTime.forEach((cas) => {
-               if (cas >= od && cas <= doo) {
+               if (cas >= od && cas < doo) {
                   tmp.push(true);
                } else {
                   tmp.push(false);
@@ -205,26 +175,11 @@ const AppProvider = ({ children }) => {
          }
          return openHodRef.current.SobNed;
       }
-
-      // const dayStr = capitalize(noDiacritics(day.format('dddd')));
-      // const od = calSettings[`${dayStr}_od`];
-      // const doo = calSettings[`${dayStr}_do`];
-      // let tmp = [];
-      // // console.log('PPPPPPPPPPPPPPPPPPP', calSettings);
-      // arrTime.forEach((cas) => {
-      //    if (cas >= od && cas <= doo) {
-      //       tmp.push(true);
-      //    } else {
-      //       tmp.push(false);
-      //    }
-      // });
-      // return tmp;
    }
 
    function isOpenSpecificOH() {
       if (arrTime.length === 0) throw new Error('isOpenSpecificOH() -> arrTIme is empty ');
       let newObjOpen = { ...objOpen };
-      console.log('objOpen', objOpen);
       konkretneDniOH.forEach((record) => {
          const { od, do: doo, timestamp, zavrete } = record;
          //ak objOpen nema taku polozku vytvori novu s novym polom
@@ -236,18 +191,19 @@ const AppProvider = ({ children }) => {
                return cas >= od && cas <= doo ? true : false;
             });
          }
-         // console.log('newObjOpen1', JSON.stringify(newObjOpen));
       });
       setObjOpen(newObjOpen);
-      setFlags({ ...flags, objOpenSDOH_setted: true });
+
+      flagsRef.current.objOpenSDOH_setted = true;
    }
 
    function changeDay(type) {
-      setIsLoadingCal(true);
+      setIsLoadingCalData(() => true);
 
-      const { maxNextDays } = calSettings;
+      const { maxNextDays, maxNextDaysXS } = calSettings;
       let zmena = false;
       let posunDay = posunDayRef.current;
+      let maxNExtDayTMP = isMobile ? maxNextDaysXS : maxNextDays;
 
       if (type === 'next') {
          if (posunDay > 0) {
@@ -258,7 +214,7 @@ const AppProvider = ({ children }) => {
          }
       }
       if (type === 'prev') {
-         if (posunDay < maxNextDays) {
+         if (posunDay < maxNExtDayTMP) {
             endDayRef.current.subtract(1, 'days');
             startDayRef.current.subtract(1, 'days');
             posunDayRef.current = posunDay + 1;
@@ -268,75 +224,20 @@ const AppProvider = ({ children }) => {
       if (type === 'today') {
          startDayRef.current = dateVal.clone();
          endDayRef.current = dateVal.clone().add(6, 'days');
-         posunDayRef.current = maxNextDays;
+         posunDayRef.current = maxNExtDayTMP;
          zmena = true;
       }
       if (zmena) {
          setWeek2();
       } else {
-         setIsLoadingCal(false);
+         setIsLoadingCalData(() => false);
       }
-   }
-
-   function selectTime(timestamp, index) {
-      let newUserSelect = { ...userSelect };
-      let newReserve = { ...arrReserve };
-      let dayObj = { ...userSelect[timestamp] };
-      let { cells, minI, maxI, zmena } = dayObj;
-
-      cells[index] ? newReserve[timestamp][index]-- : newReserve[timestamp][index]++;
-      cells[index] = !cells[index];
-      zmena = true;
-
-      if (index < maxI && index > minI) {
-         for (let i = index + 1; i < cells.length; i++) {
-            if (cells[i] === false) {
-               break;
-            }
-            cells[i] = false;
-            newReserve[timestamp][i]--;
-            console.log(i);
-         }
-      }
-      minI = cells.findIndex((item) => item === true);
-      maxI = cells.lastIndexOf(true);
-
-      newUserSelect[timestamp] = { cells, minI, maxI, zmena };
-
-      setArrReserve(newReserve);
-      setUserSelect(newUserSelect);
-   }
-
-   function zrusitVyber(timestamp) {
-      let newUserSelect = { ...userSelect };
-      let newReserve = { ...arrReserve };
-
-      let { cells, minI, maxI, zmena } = newUserSelect[timestamp];
-      let reserve = newReserve[timestamp];
-      for (let i = minI; i <= maxI; i++) {
-         cells[i] = false;
-         reserve[i] -= 1;
-      }
-
-      minI = -1;
-      maxI = -1;
-      zmena = true;
-      newUserSelect[timestamp] = { cells, minI, maxI, zmena };
-      newReserve[timestamp] = reserve;
-
-      console.log('userSelect', userSelect);
-      console.log('newuserSelect', newUserSelect);
-      console.log('arrReserve', arrReserve);
-      console.log('newReserve', newReserve);
-
-      setArrReserve(newReserve);
-      setUserSelect(newUserSelect);
    }
 
    async function fetchRezervacie() {
       setIsLoadingCal(true);
-      console.log('loading on', JSON.stringify(isLoadingCal));
-      console.log('CLEAN');
+      // console.log('loading on', JSON.stringify(isLoadingCal));
+      // console.log('CLEAN');
       let newUserSelect = { ...userSelect };
       let newReserve = { ...arrReserve };
 
@@ -355,13 +256,13 @@ const AppProvider = ({ children }) => {
             Authorization: `Bearer ${token}`,
          },
       });
-      console.log('fetchRezervacie::', data);
+      // console.log('fetchRezervacie::', data);
       data.forEach((rezervacia) => {
          const { tstampOfDay, startI, endI, userId: user_DBid } = rezervacia;
          if (newReserve[tstampOfDay]) {
             for (let i = startI; i <= endI; i++) {
                newReserve[tstampOfDay][i] += 1;
-               console.log(user_DBid, userId);
+               // console.log(user_DBid, userId);
                if (user_DBid === userId) {
                   newUserSelect[tstampOfDay].cells[i] = true;
                }
@@ -377,43 +278,7 @@ const AppProvider = ({ children }) => {
       setUserSelect(newUserSelect);
 
       setIsLoadingCal(false);
-      console.log('loading of', JSON.stringify(isLoadingCal));
-      // TODO stop loading
-   }
-
-   async function submitReserve() {
-      //TODO loading
-      // const { userId, token } = userState
-      const token = await getAccessTokenSilently();
-      const userId = user.sub;
-      let newUserSelect = { ...userSelect };
-      let submitData = {};
-
-      console.log('submit data after:', submitData);
-      for (const key in userSelect) {
-         const { zmena, minI, maxI } = userSelect[key];
-         if (zmena) {
-            submitData[userId] || (submitData[userId] = {});
-            submitData[userId][key] = { minI, maxI };
-            userSelect[key].zmena = false; //aj tak je to referencia na pole cije je jedno ci pouzijem plytku kopiu objektu userSelect alebo nie
-         }
-      }
-      console.log('send:');
-      console.log(submitData);
-      if (!isEmtyObj(submitData)) {
-         const response = await Axios.post(
-            `${serverUrl}/calendar/add`,
-            { payload: submitData },
-            {
-               headers: {
-                  Authorization: `Bearer ${token}`,
-               },
-            }
-         );
-         if (response.status == 200) {
-            setAlert({ status: 200, open: true });
-         }
-      }
+      // console.log('loading of', JSON.stringify(isLoadingCal));
       // TODO stop loading
    }
 
@@ -422,7 +287,9 @@ const AppProvider = ({ children }) => {
       const data = response.data[0];
       console.log('data_SETTINGS:', data);
       const values = Object.values(data);
-      // console.log(values);
+
+      const { calendarLength, calendarLengthXS } = calendarInitState;
+      const maxNextDaysXS = data.maxNextDays + (calendarLength - calendarLengthXS);
       let posunDay = data.maxNextDays;
       let minT = '23:00',
          maxT = '01:00';
@@ -434,18 +301,12 @@ const AppProvider = ({ children }) => {
          }
       });
 
-      setCalSettings({ ...data, minT, maxT });
-      // setPosunDay(posunDay);
+      setCalSettings({ ...data, minT, maxT, maxNextDaysXS });
       posunDayRef.current = posunDay;
 
-      setFlags({ ...flags, settingsFetched: true });
+      flagsRef.current.settingsFetched = true;
    }
 
-   const _setFlags = (name, value) => {
-      setFlags((prev) => {
-         return { ...prev, [name]: value };
-      });
-   };
    //docastne tu
    async function getZoznamOH() {
       const response = await Axios.get(`${serverUrl}/calendar/get-zmena-otvorenie-specificky-den`);
@@ -453,32 +314,38 @@ const AppProvider = ({ children }) => {
       console.log('getZoznamOH-data', data);
       setKonkretneDniOH(response.data);
 
-      _setFlags('zoznamOHfetched', true);
-      // setFlags({ ...flags, zoznamOHfetched: true });
+      flagsRef.current.zoznamOHfetched = true;
    }
 
    useEffect(() => {
       console.log('effect fetch');
+      // console.log(JSON.stringify(flagsRef));
       fetchSettings();
       getZoznamOH();
    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
    useEffect(() => {
       console.log('effect settime');
+      // console.log(JSON.stringify(flagsRef));
       setTime2();
-   }, [flags.settingsFetched]); // eslint-disable-line react-hooks/exhaustive-deps
+      // setTime2();
+   }, [flagsRef.current.settingsFetched]); // eslint-disable-line react-hooks/exhaustive-deps
 
    useEffect(() => {
       console.log('effec setSDOH');
-      if (flags.timeSeted && flags.zoznamOHfetched) {
+      // console.log(JSON.stringify(flagsRef));
+      if (flagsRef.current.timeSeted && flagsRef.current.zoznamOHfetched) {
          isOpenSpecificOH();
       }
-   }, [flags.zoznamOHfetched]); // eslint-disable-line react-hooks/exhaustive-deps
+   }, [flagsRef.current.zoznamOHfetched]); // eslint-disable-line react-hooks/exhaustive-deps
 
    useEffect(() => {
-      console.log('effect setweek');
-      setWeek2();
-   }, [flags.objOpenSDOH_setted]); // eslint-disable-line react-hooks/exhaustive-deps
+      console.log('effect setweek', flagsRef.current.objOpenSDOH_setted);
+      // console.log(JSON.stringify(flagsRef));
+      if (flagsRef.current.objOpenSDOH_setted) {
+         setWeek2();
+      }
+   }, [flagsRef.current.objOpenSDOH_setted]); // eslint-disable-line react-hooks/exhaustive-deps
 
    useEffect(async () => {
       if (isAuthenticated) {
@@ -496,6 +363,23 @@ const AppProvider = ({ children }) => {
       }
    }, [isAuthenticated]);
 
+   useEffect(() => {
+      //zmena poctu zobrazenych dni pri rozliseni telefonu XS
+      const { calendarLength, calendarLengthXS } = calendarInitState;
+      let { maxNextDays, maxNextDaysXS } = calSettings;
+      console.log(JSON.stringify(flagsRef));
+      if (isMobile) {
+         calendarLengthRef.current = calendarLengthXS;
+         posunDayRef.current = maxNextDaysXS;
+         console.log('posunDayRef', posunDayRef);
+      } else {
+         calendarLengthRef.current = calendarLength;
+         posunDayRef.current = maxNextDays;
+      }
+      changeDay('today');
+   }, [isMobile, flagsRef.current.settingsFetched]);
+
+   console.count('renderPROFIDER');
    return (
       <AppContext.Provider
          value={{
@@ -506,7 +390,9 @@ const AppProvider = ({ children }) => {
             arrWeek,
             arrTime,
             arrReserve,
+            setArrReserve,
             userSelect,
+            setUserSelect,
             calSettings,
             setCalSettings,
             objOpen,
@@ -515,22 +401,21 @@ const AppProvider = ({ children }) => {
             //OTHER STATE
             cennik,
             setCennik,
-            // submitDataTest,
             maxNextDays,
             posunDayRef,
             kapacity,
             isLoadingCal,
+            setIsLoadingCal,
+            isLoadingCalData,
             //profil
             dbUser,
             setDbUser,
             //
             changeDay,
-            selectTime,
             fetchRezervacie,
-            submitReserve,
-            zrusitVyber,
-            alert,
-            setAlert,
+            //auth
+            getAccessTokenSilently,
+            user,
          }}>
          {children}
       </AppContext.Provider>
@@ -543,5 +428,3 @@ export const useGlobalContext = () => {
 };
 
 export { AppContext, AppProvider };
-
-// console.log('zhoda', Object.is(dayObj, userSelect[timestamp]));

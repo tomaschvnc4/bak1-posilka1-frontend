@@ -5,6 +5,8 @@ import Cennik from './cennik/Cennik';
 
 const Home = () => {
    const classes = useStyles();
+
+   console.count('render Home');
    return (
       <main className='kontakt-main-container uvod'>
          <Grid container className={classes.root}>
@@ -67,6 +69,9 @@ const useStyles = makeStyles((theme) => ({
             maxWidth: '350px',
             marginTop: '3%',
          },
+      },
+      '& h3': {
+         WebkitTextStroke: '0px black',
       },
    },
 

@@ -25,7 +25,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useGlobalContext } from '../../context/Provider2';
-import AlertBox from '../AlertBox';
+import clsx from 'clsx';
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
 
@@ -39,13 +39,16 @@ const Profil = () => {
    const { user } = useAuth0();
    let { picture } = user;
 
+   console.count('render Profil');
    return (
-      <Paper component='main' elevation={10} className='kontakt-main-container profil'>
+      <Paper
+         component='main'
+         elevation={10}
+         className={clsx(classes.root, 'kontakt-main-container profil')}>
          <Typography variant='h3'>
             <span>PROFIL</span>
          </Typography>
          <Grid container justify='center'>
-            {/*  */}
             <Grid container item xs={12} md={3} justify='center' alignItems='center'>
                <Grid item>
                   <img src={picture} alt='Profil img' />
@@ -194,6 +197,11 @@ const EditField = (props) => {
 };
 
 const useStyles = makeStyles((theme) => ({
+   root: {
+      '& h3 span': {
+         WebkitTextStroke: '0px black',
+      },
+   },
    table: {
       marginTop: '2%',
       [theme.breakpoints.up('md')]: {

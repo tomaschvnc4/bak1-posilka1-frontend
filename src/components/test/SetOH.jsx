@@ -18,17 +18,9 @@ const SetOH = () => {
    const [checked, setChecked] = useState(false);
 
    const myOnSubmit = (data) => {
-      console.log('submit:', data);
-
-      console.log(checked);
       const dataToSend = [...Object.values(data), checked];
-      console.log(dataToSend);
-      Axios.post(`${serverUrl}/calendar/editHodiny`, { payload: dataToSend });
 
-      // const dataToSend = Object.values(data);
-      // // console.log(dataToSend);
-      // setCalSettings({ ...data, ...newValues });
-      // setPosunDay(newCalSettings.maxNextDays);
+      Axios.post(`${serverUrl}/calendar/editHodiny`, { payload: dataToSend });
 
       //+ alert ze treba po zmene refresh stranky -- alebo to poriesit este
       // // TODO alert
@@ -42,14 +34,13 @@ const SetOH = () => {
    }, [calSettings]);
 
    useEffect(() => {
-      console.log('effectSETVALUE', calSettings);
       setValue('kapacita', calSettings.kapacita);
       setValue('maxNextDays', calSettings.maxNextDays);
       setValue('dennyLimit', calSettings.dennyLimit);
       setChecked(!!calSettings.enableKalendar);
    }, [calSettings]);
 
-   console.count('renderCount - <SetOH />');
+   console.count('render - <SetOH />');
    return (
       <Grid
          container

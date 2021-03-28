@@ -17,17 +17,14 @@ const SetCennik = () => {
    // const [itemToEditRef, setItemToEdit] = useRef({});
    const itemToEditRef = useRef({});
 
-   console.log('cennik', cennik);
-
    async function onSubmit(data) {
-      console.log('dataSubmit', data);
       const { id: poradie, title, price } = data;
       const { id } = itemToEditRef.current || '';
 
       const newItem = { id, poradie, title, price };
 
       await Axios.post(`${serverUrl}/cennik/change`, { payload: newItem });
-      // setCennik(newCennik);
+
       reset();
       itemToEditRef.current = {};
       setFetchData(!fetchData);
@@ -45,11 +42,11 @@ const SetCennik = () => {
    async function getCennik() {
       const response = await Axios.get(`${serverUrl}/cennik/get`);
       const { data, status } = response;
-      console.log('data', data);
+
       data.sort((o1, o2) => {
          return o1.poradie - o2.poradie;
       });
-      console.log('data after sort', data);
+
       status === 200 && setCennik(data);
    }
 

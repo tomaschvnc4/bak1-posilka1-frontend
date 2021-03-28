@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import SetCennik from './SetCennik';
 
 import SetKonkretnyDen from './SetKonkretnyDen';
@@ -9,18 +9,15 @@ import AdminPouzivatelia from './AdminPouzivatelia';
 import { Grid } from './_import';
 
 const TestContainer = () => {
-   console.log('render container');
+   console.log('render Testcontainer');
    return (
-      <Grid
-         container
-         // direction='row'
-         component='main'>
+      <Grid container component='main'>
          <SetOH />
          <SetKonkretnyDen />
          <SetCennik />
-         <Grid item md={6} xs={12}></Grid>
-         <AdminRezervacie />
+         {/* <Grid item md={6} xs={12}></Grid> */}
          <AdminPouzivatelia />
+         <AdminRezervacie />
       </Grid>
    );
 };

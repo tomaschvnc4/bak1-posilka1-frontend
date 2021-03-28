@@ -1,20 +1,68 @@
-import React from 'react';
+import Axios from 'axios';
+import React, { useState } from 'react';
 
 import { useGlobalContext } from '../../context/Provider2';
+import { isEmtyObj } from '../../helpers';
 import AlertBox from '../AlertBox';
-// import SubmitBtn from './SubmitBtn';
 
 //prettier-ignore
 import { Grid, Button, ArrowLeftRoundedIcon, ArrowRightRoundedIcon,Typography,makeStyles } from './_imports';
-// import { useGlobalContext } from '../../_contex';
+const serverUrl = process.env.REACT_APP_SERVER_URL;
 
 const Cal_nav = () => {
+   //prettier-ignore
+   const { endDayRef, startDayRef, changeDay, getAccessTokenSilently,user,userSelect } = useGlobalContext();
    const classes = useStyles();
-   const { endDayRef, startDayRef, changeDay, submitReserve, alert, setAlert } = useGlobalContext();
-   const { open } = alert;
+   const [alert, setAlert] = useState(false);
+
+   /*=======
+   FUNCTION
+   =========   
+   */
+   async function submitReserve() {
+      const token = await getAccessTokenSilently();
+      const userId = user.sub;
+      let newUserSelect = { ...userSelect };
+      let submitData = {};
+
+      // console.log('submit data after:', submitData);
+      for (const key in userSelect) {
+         const { zmena, minI, maxI } = userSelect[key];
+         if (zmena) {
+            submitData[userId] || (submitData[userId] = {});
+            submitData[userId][key] = { minI, maxI };
+            userSelect[key].zmena = false; //aj tak je to referencia na pole cije je jedno ci pouzijem plytku kopiu objektu userSelect alebo nie
+         }
+      }
+      // console.log('send:');
+      // console.log(submitData);
+      if (!isEmtyObj(submitData)) {
+         const response = await Axios.post(
+            `${serverUrl}/calendar/add`,
+            { payload: submitData },
+            {
+               headers: {
+                  Authorization: `Bearer ${token}`,
+               },
+            }
+         );
+         if (response.status == 200) {
+            setAlert(true);
+         }
+      }
+   }
+   /*=======
+   RENDER
+   =========   
+   */
    return (
       <div className={classes.root}>
-         {open && <AlertBox closeFun={setAlert} mess='Uloženie bolo úspešné' />}
+         <AlertBox
+            isOpen={alert}
+            setOpen={setAlert}
+            mess='Uloženie bolo úspešné'
+            severity='success'
+         />
          <Grid container justify='space-around'>
             <Grid>
                <Typography variant='h6'>

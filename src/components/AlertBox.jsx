@@ -7,20 +7,20 @@ function Alert(props) {
    return <MuiAlert elevation={6} variant='filled' {...props} />;
 }
 
-export default function AlertBox({ closeFun, mess }) {
+export default function AlertBox({ isOpen, setOpen, mess, severity }) {
    // const classes = useStyles();
-   const [open, setOpen] = React.useState(true);
+   // const [open, setOpen] = React.useState(true);
 
-   const handleClick = () => {
-      setOpen(true);
-   };
+   // const handleClick = () => {
+   //    setOpen(true);
+   // };
 
    const handleClose = (event, reason) => {
       if (reason === 'clickaway') {
          return;
       }
       setOpen(false);
-      closeFun(false);
+      // closeFun(false);
    };
 
    return (
@@ -28,8 +28,8 @@ export default function AlertBox({ closeFun, mess }) {
          {/* <Button variant='outlined' onClick={handleClick}>
             Open success snackbar
          </Button> */}
-         <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity='success'>
+         <Snackbar open={isOpen} autoHideDuration={400000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity={severity}>
                {mess}
             </Alert>
          </Snackbar>

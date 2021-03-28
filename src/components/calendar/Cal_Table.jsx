@@ -6,32 +6,71 @@ import {  withStyles, makeStyles, Table, TableBody, TableCell, TableContainer,  
 import Cell from './Cell';
 import { useGlobalContext } from '../../context/Provider2';
 import Loading2 from '../loading2';
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
+import AlertBox from '../AlertBox';
 
 const Cal_Table = () => {
    const classes = useStyles();
-   const { arrWeek: arrDays, arrTime, calSettings, zrusitVyber, userSelect } = useGlobalContext();
+   //prettier-ignore
+   const { arrWeek, arrTime, calSettings, userSelect,arrReserve,setUserSelect,setArrReserve } = useGlobalContext();
 
+   const [alert, setAlert] = React.useState(false);
+
+   /*=======
+   FUNKCIE
+   =========   
+   */
+   function zrusitVyber(timestamp) {
+      let newUserSelect = { ...userSelect };
+      let newReserve = { ...arrReserve };
+
+      let { cells, minI, maxI, zmena } = newUserSelect[timestamp];
+      let reserve = newReserve[timestamp];
+      for (let i = minI; i <= maxI; i++) {
+         cells[i] = false;
+         reserve[i] -= 1;
+      }
+
+      minI = -1;
+      maxI = -1;
+      zmena = true;
+      newUserSelect[timestamp] = { cells, minI, maxI, zmena };
+      newReserve[timestamp] = reserve;
+
+      setArrReserve(newReserve);
+      setUserSelect(newUserSelect);
+   }
+
+   /*=======
+   RENDER
+   =========   
+   */
+   console.count('render table');
    return (
       <div className={classes.root}>
-         {<Loading2 />}
+         <Loading2 />
+         <AlertBox isOpen={alert} setOpen={setAlert} mess={<MessageSnackBar />} severity='info' />
+         <AlertBox isOpen={alert} setOpen={setAlert} mess={<MessageSnackBar />} severity='info' />
          <TableContainer component={Paper}>
             <Table className={classes.table} aria-label='customized table' stickyHeader>
                <TableHead>
                   <TableRow>
-                     <StyledTableCell>#</StyledTableCell>
+                     <StyledTableCell>
+                        <IconButton style={{ color: 'inherit' }} onClick={() => setAlert(true)}>
+                           <InfoOutlinedIcon />
+                        </IconButton>
+                     </StyledTableCell>
 
-                     {arrDays.map((day, index) => {
-                        const timestamp = day.valueOf();
-                        // console.log(day);
-                        // console.log(day.format('ddd, DD.MM.'));
+                     {arrWeek.map((day, index) => {
+                        // const timestamp = day.valueOf();
                         return (
                            <StyledTableCell key={index}>
                               {day.format('ddd, DD.MM.').toUpperCase()}
-                              <Tooltip title='Zrusit vyber'>
+                              {/* <Tooltip title='Zrusit vyber'>
                                  <IconButton onClick={() => zrusitVyber(timestamp)}>
                                     <DeleteForeverRoundedIcon color='secondary' size='small' />
                                  </IconButton>
-                              </Tooltip>
+                              </Tooltip> */}
                            </StyledTableCell>
                         );
                      })}
@@ -40,9 +79,11 @@ const Cal_Table = () => {
                <TableBody>
                   <StyledTableRow>
                      <StyledTableCell>
-                        <b>Limit</b>
+                        <b style={{ borderBottom: '1px solid black' }}>Denný limit</b>
+                        <br />
+                        <b>Hodina</b>
                      </StyledTableCell>
-                     {arrDays.map((day, index) => {
+                     {arrWeek.map((day, index) => {
                         const timestamp = day.valueOf();
                         const { minI, maxI } = userSelect[timestamp];
                         let aktLimit = 0;
@@ -51,8 +92,15 @@ const Cal_Table = () => {
                         }
                         return (
                            <StyledTableCell key={index}>
-                              {`${aktLimit} / ${calSettings.dennyLimit}`}
-                              <Typography onClick={() => zrusitVyber(timestamp)}>Zrusit</Typography>
+                              <Typography color='primary' variant='body2'>
+                                 {`${aktLimit * 0.5} / ${calSettings.dennyLimit * 0.5} hod`}
+                              </Typography>
+                              <Typography
+                                 color='secondary'
+                                 style={{ fontWeight: '500' }}
+                                 onClick={() => zrusitVyber(timestamp)}>
+                                 Zrušiť
+                              </Typography>
                            </StyledTableCell>
                         );
                      })}
@@ -64,9 +112,10 @@ const Cal_Table = () => {
                         otvorene && (
                            <StyledTableRow key={`${index}${time}`}>
                               <StyledTableCell>
-                                 <b>{`${time}-${arrTime[index + 1]}`}</b>
+                                 <b>{`${time}`}</b>
+                                 {/* <b>{`${time}-${arrTime[index + 1]}`}</b> */}
                               </StyledTableCell>
-                              {arrDays.map((day) => {
+                              {arrWeek.map((day) => {
                                  const timestamp = day.valueOf();
                                  return (
                                     <StyledTableCell key={`${timestamp}${index}`}>
@@ -86,6 +135,35 @@ const Cal_Table = () => {
 };
 
 export default Cal_Table;
+
+const MessageSnackBar = () => {
+   return (
+      <div>
+         <p>
+            <b>Inštrukcie:</b>
+         </p>
+         <p>
+            <b>Bunka tabuľky</b> <br />
+            &nbsp;&nbsp;- základnú časová jednotka rezervácie, ktorú je možné zakliknúť, pričom
+            predstavuje 30 minút. Tieto bunky je možné navájom reťaziť do jedného časového bloku,
+            maximálne však do veľkosti denného limitu.
+            <br />
+            &nbsp;&nbsp;- bunku je možné zvoliť, iba v prípade, že v danom časovom okne nie je
+            prekročená kapacita alebo nie je prekročenný denný limit.
+         </p>
+         <ul style={{ listStyleType: 'circle' }}>
+            <li>
+               <b>Denný limit - </b>predstavuje maximálny počet hodín, ktoré je možné si v daný deň
+               rezervovať ako súvislý časový blok rátaný po 30 minút.
+            </li>
+            <li>
+               <b>Zrušiť - </b> tlačidlo, ktorým je možné naraz zrušieť všetky zvolené 30 minútové
+               časové okná v daný deň.
+            </li>
+         </ul>
+      </div>
+   );
+};
 
 /********
  * STYLES

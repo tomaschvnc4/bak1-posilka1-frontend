@@ -7,13 +7,12 @@ const Cennik = () => {
    const { cennik, setCennik } = useGlobalContext();
 
    useEffect(async () => {
-      console.log('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', serverUrl);
       const response = await Axios.get(`${serverUrl}/cennik/get`);
       const { data, status } = response;
 
       status === 200 && setCennik(data);
    }, []);
-
+   console.count('render Cennik');
    return (
       <main className='kontakt-main-container cennik'>
          <Typography variant='h3'>
@@ -43,7 +42,7 @@ const Cennik = () => {
                      component='article'
                      key={id}>
                      <Typography variant='subtitle1'>{title}</Typography>
-                     <Typography>{price}€</Typography>
+                     <Typography variant='subtitle1'>{price}€</Typography>
                   </Grid>
                );
             })}

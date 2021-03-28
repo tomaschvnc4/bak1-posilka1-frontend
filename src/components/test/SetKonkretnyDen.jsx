@@ -32,20 +32,18 @@ const SetKonkretnyDen = () => {
    const [checked, setChecked] = useState(false);
 
    const myOnSubmit = async (data, e) => {
-      console.log('submit:', data);
       data.datePicker = data.datePicker.valueOf();
       data.zavrete = checked;
       console.log(data.datePicker);
       if (isNaN(data.datePicker)) {
-         console.log('ERROR');
          setError({ state: true, mes: 'nespravny format casu' });
          return;
       }
-      console.log('NO ERROR');
+
       reset();
       setKonkretnyDenCas({ od: '', doo: '' });
       setError({ state: false, mes: '' });
-      console.log('dataToSend:', data);
+
       await Axios.post(`${serverUrl}/calendar/add-zmena-otvorenie-specificky-den`, {
          payload: data,
       });

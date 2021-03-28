@@ -97,5 +97,8 @@ const useStyles = makeStyles((theme) => ({
          color: '#7D0000',
          fontSize: '50px',
       },
+      '& p,span': {
+         color: 'black',
+      },
    },
 }));

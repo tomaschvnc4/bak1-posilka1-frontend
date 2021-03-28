@@ -6,11 +6,9 @@ import themeGreenRed from '../../themes/customPallete';
 
 import { useGlobalContext } from '../../context/Provider2';
 
-// import { useGlobalContext } from '../../_contex';
-
 const Cell = ({ timestamp, index }) => {
    //prettier-ignore
-   const {userSelect,arrReserve,selectTime,objOpen, calSettings,} = useGlobalContext();
+   const { userSelect, arrReserve, objOpen, calSettings, setUserSelect ,setArrReserve} = useGlobalContext();
 
    const { minI, maxI, cells } = userSelect[timestamp];
    const { dennyLimit } = calSettings;
@@ -50,6 +48,44 @@ const Cell = ({ timestamp, index }) => {
       disableBtn = true;
    }
 
+   /*=======
+   FUNKCIE
+   =========   
+   */
+
+   function selectTime(timestamp, index) {
+      let newUserSelect = { ...userSelect };
+      let newReserve = { ...arrReserve };
+      let dayObj = { ...userSelect[timestamp] };
+      let { cells, minI, maxI, zmena } = dayObj;
+
+      cells[index] ? newReserve[timestamp][index]-- : newReserve[timestamp][index]++;
+      cells[index] = !cells[index];
+      zmena = true;
+
+      if (index < maxI && index > minI) {
+         for (let i = index + 1; i < cells.length; i++) {
+            if (cells[i] === false) {
+               break;
+            }
+            cells[i] = false;
+            newReserve[timestamp][i]--;
+            // console.log(i);
+         }
+      }
+      minI = cells.findIndex((item) => item === true);
+      maxI = cells.lastIndexOf(true);
+
+      newUserSelect[timestamp] = { cells, minI, maxI, zmena };
+
+      setArrReserve(newReserve);
+      setUserSelect(newUserSelect);
+   }
+
+   /*=======
+   RENDER
+   =========   
+   */
    return (
       <>
          {index}

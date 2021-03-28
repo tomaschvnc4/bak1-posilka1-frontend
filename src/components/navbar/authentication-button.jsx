@@ -10,7 +10,6 @@ const AuthenticationButton = () => {
    const { isAuthenticated } = useAuth0();
    const { loginWithRedirect, logout } = useAuth0();
 
-   console.log(isAuthenticated);
    return isAuthenticated ? (
       <li>
          <Link

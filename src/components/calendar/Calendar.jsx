@@ -6,14 +6,30 @@ import { Link } from 'react-router-dom';
 import CalNav from './Cal_nav';
 import CalTable from './Cal_Table';
 import { Paper, Typography } from '@material-ui/core';
+import Loading2 from '../loading2';
+import Loading from '../loading';
 
 const Calendar = () => {
-   const { fetchRezervacie, dbUser, calSettings } = useGlobalContext();
+   //prettier-ignore
+   const { fetchRezervacie, dbUser, calSettings ,isLoadingCal, setIsLoadingCal,isLoadingCalData} = useGlobalContext();
    const refuse = dbUser.meno === '' ? true : false;
 
    useEffect(() => {
       fetchRezervacie();
    }, []);
+
+   useEffect(() => {
+      return () => {
+         console.log('unmounting...');
+         setIsLoadingCal(true);
+      };
+   }, []);
+
+   console.count('render all Calendar');
+
+   if (isLoadingCal) {
+      return <Loading />;
+   }
 
    return (
       <>
@@ -27,6 +43,7 @@ const Calendar = () => {
          ) : calSettings.enableKalendar ? (
             <div>
                <CalNav />
+               {!isLoadingCal && console.log('toto rendrujem dva krat')}
                <CalTable />
             </div>
          ) : (
