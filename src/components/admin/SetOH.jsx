@@ -12,19 +12,24 @@ const serverUrl = process.env.REACT_APP_SERVER_URL;
 const SetOH = () => {
    const classes = useStyles();
    const { register, handleSubmit, setValue, errors, getValues, watch } = useForm(); // potom skusit cez controll aby bolo mozne mat defaul hodnotu bez prerendrovana vzdy pri zmene
-   const { calSettings, setCalSettings, setPosunDay } = useGlobalContext();
+   const { calSettings, setCalSettings, setPosunDay, getAccessTokenSilently } = useGlobalContext();
 
    const [newValues, setNewValues] = useState({});
    const [checked, setChecked] = useState(false);
 
-   const myOnSubmit = (data) => {
+   async function myOnSubmit(data) {
       const dataToSend = [...Object.values(data), checked];
-
-      Axios.post(`${serverUrl}/calendar/editHodiny`, { payload: dataToSend });
+      const token = await getAccessTokenSilently();
+      const options = {
+         headers: {
+            Authorization: `Bearer ${token}`,
+         },
+      };
+      Axios.post(`${serverUrl}/calendar/editHodiny`, { payload: dataToSend }, options);
 
       //+ alert ze treba po zmene refresh stranky -- alebo to poriesit este
       // // TODO alert
-   };
+   }
    const dni = ['PonPia', 'SobNed'];
    // const dni = ['Pondelok - Piatok', 'Sobota - Nedela'];
    // const dni = ['Pondelok', 'Utorok', 'Streda', 'Stvrtok', 'Piatok', 'Sobota', 'Nedela'];

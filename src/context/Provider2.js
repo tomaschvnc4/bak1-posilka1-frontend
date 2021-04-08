@@ -53,7 +53,6 @@ const AppProvider = ({ children }) => {
    const endDayRef = useRef(calendarInitState.endDay);
    const posunDayRef = useRef(calendarInitState.posunDay);
    const calendarLengthRef = useRef(calendarInitState.calendarLength);
-
    // console.log('userSelect', userSelect);
    // console.log('calSettings', calSettings);
 

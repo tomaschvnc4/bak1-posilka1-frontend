@@ -48,9 +48,9 @@ export default [
    },
    {
       id: 8,
-      name: 'Test',
-      path: '/test',
-      _protected: false,
+      name: 'admin',
+      path: '/adminPanel',
+      _protected: true,
    },
    {
       id: 15,

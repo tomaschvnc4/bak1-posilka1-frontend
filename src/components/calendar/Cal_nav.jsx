@@ -62,6 +62,7 @@ const Cal_nav = () => {
             setOpen={setAlert}
             mess='Uloženie bolo úspešné'
             severity='success'
+            duration={4000}
          />
          <Grid container justify='space-around'>
             <Grid>

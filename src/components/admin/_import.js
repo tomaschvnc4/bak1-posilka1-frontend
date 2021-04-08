@@ -22,6 +22,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import CreateIcon from '@material-ui/icons/Create';
 import DeleteForeverRoundedIcon from '@material-ui/icons/DeleteForeverRounded';
 
+import { useAuth0 } from '@auth0/auth0-react';
+
 export {
    Axios,
    TextField,
@@ -43,4 +45,5 @@ export {
    SearchIcon,
    CreateIcon,
    DeleteForeverRoundedIcon,
+   useAuth0,
 };

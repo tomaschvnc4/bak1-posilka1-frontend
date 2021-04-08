@@ -10,34 +10,72 @@ const Home = () => {
    return (
       <main className='kontakt-main-container uvod'>
          <Grid container className={classes.root}>
-            <Grid item md={6}>
+            <Grid item md={7}>
                <Paper elevation={20}>
                   <Typography variant='h3'>
                      O <span>NÁS</span>
                   </Typography>
                   <p>
-                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae fuga iusto
-                     incidunt, eaque sequi magni, adipisci officia inventore accusantium ad
-                     doloribus, porro
+                     <b>JUNGLE GYM</b> je fitness klub, so zameraním na klasický, aj funkčný
+                     tréning, posilňovanie a formovanie tela, budovanie a udržanie kondície,
+                     udržanie a obnovovanie zdravia a funkčnosti pohybového aparátu a miesto kde
+                     ľudia trávia svoj voľný čas, za účelom starostlivosti o svoje telo, kondíciu a
+                     zdravie a miestom psychického uvoľnenia.
                   </p>
                   <p>
-                     illum? Asperiores perferendis at velit voluptatem similique necessitatibus?
-                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae fuga iusto
-                     incidunt, eaque sequi magni, adipisci officia inventore accusantium ad
-                     doloribus, porro illum? Asperiores perferendis at velit voluptatem similique
-                     necessitatibus?
+                     Majiteľ a prevádzkovateľ <b>Ľuboš Turčina</b> bol úspešný reprezentant v
+                     kulturistike, je profesionálni fitness tréner a výživový poradca s dlhoročnými
+                     skúsenosťami.
+                  </p>
+                  <p>
+                     JUNGLE GYM sa nachádza blízko centra mesta, hneď pri hlavnom cestnom ťahu, s
+                     parkovaním zadarmo. Celková rozloha je 525m2. Je vybavené profesionálnymi
+                     zariadeniami americkej značky LIFE FITNESS, TECHNO GYM a strojmi na spôsob
+                     HAMMER STRENGHT, CONCEPT. Fitness centrum je všestranne vybavené na tréning aj
+                     pre športovcov z iných odvetví, ale aj pre širokú verejnosť a{' '}
+                     <b>je cenovo dostupný</b>.
                   </p>
                </Paper>
             </Grid>
-            <Grid container item md={6} justify='center'>
+
+            <Grid container item md={5} justify='center'>
                <div className={classes.imgContainer}>
                   <img src={image} alt='' />
                </div>
             </Grid>
+            <Grid container justify='center'>
+               <Paper elevation={20}>
+                  <Typography variant='h5'>
+                     {/* O <span>NÁS</span> */}
+                     <span>Pre koho</span>
+                  </Typography>
+                  <p>
+                     Fitness centrum je určené pre každého bez ohľadu na vek, pohlavie a športové
+                     ambície. Pre mladších i starších, pre športovcov, pre mužov, pre pracujúce ženy
+                     i ženy v domácnosti, ako aj pre večne vyťažených podnikateľov, pre ľudí
+                     trpiacich nadváhou, pre seniorov i deti. Pre každého, kto chce urobiť niečo so
+                     sebou, chce si sformovať alebo vypracovať postavu či schudnúť a zmeniť svoje
+                     návyky smerom k aktívnemu i zdravému životnému štýlu. Sme tu pre všetkých,
+                     ktorí majú chuť urobiť niečo pre svoje zdravie a postavu. Všetci k nám majú
+                     dvere otvorené.
+                  </p>
+                  <p>
+                     Vďaka našim vedomostiam a skúsenostiam vieme dosiahnuť, aby ste boli spokojní,
+                     aby Vás cvičenie bavilo a aby vám prinášalo radosť. Vieme, čo ľudia očakávajú a
+                     vyžadujú a práve toto im chceme v plnej miere poskytnúť. V našom zariadení máme
+                     k dispozícii trénerov, ktorí Vám môžu pomôcť dosiahnuť stanovený cieľ.
+                     Nestrácajte čas zbytočným experimentovaním a nechajte si poradiť. Každému
+                     klientovi v prípade záujmu vypracujeme jedálniček i tréningový plán a
+                     poskytneme nadštandardnú individuálnu starostlivosť. Tí, ktorí predtým
+                     necvičili sa vďaka nám naučia, ako správne cvičiť na jednotlivých strojoch, s
+                     vlastnou váhou a športovým náradím a pomôckami, ale aj ako sa stravovať.
+                  </p>
+               </Paper>
+            </Grid>
          </Grid>
-         <div style={{ marginTop: '10%' }}>
+         {/* <div style={{ marginTop: '5%' }}>
             <Cennik />
-         </div>
+         </div> */}
       </main>
    );
 };
@@ -50,8 +88,9 @@ const useStyles = makeStyles((theme) => ({
          position: 'relative',
          zIndex: '5',
          padding: '22px',
-         top: '10%',
-         marginBottom: '10%',
+         // top: '10%',
+         // marginBottom: '10%',
+         marginTop: '5%',
       },
       '& .MuiPaper-elevation10': {
          boxShadow:
@@ -72,6 +111,11 @@ const useStyles = makeStyles((theme) => ({
       },
       '& h3': {
          WebkitTextStroke: '0px black',
+      },
+      '& .MuiTypography-h5': {
+         color: 'var(--clr-nav-orange)',
+         fontWeight: '800',
+         letterSpacing: '3px',
       },
    },
 

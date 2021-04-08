@@ -7,7 +7,7 @@ function Alert(props) {
    return <MuiAlert elevation={6} variant='filled' {...props} />;
 }
 
-export default function AlertBox({ isOpen, setOpen, mess, severity }) {
+export default function AlertBox({ isOpen, setOpen, mess, severity, duration }) {
    // const classes = useStyles();
    // const [open, setOpen] = React.useState(true);
 
@@ -28,7 +28,7 @@ export default function AlertBox({ isOpen, setOpen, mess, severity }) {
          {/* <Button variant='outlined' onClick={handleClick}>
             Open success snackbar
          </Button> */}
-         <Snackbar open={isOpen} autoHideDuration={400000} onClose={handleClose}>
+         <Snackbar open={isOpen} autoHideDuration={duration} onClose={handleClose}>
             <Alert onClose={handleClose} severity={severity}>
                {mess}
             </Alert>

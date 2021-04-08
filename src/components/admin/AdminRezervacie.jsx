@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 //prettier-ignore
-import { Grid, TextField, Axios, Paper, SearchIcon, TableHead,TableRow, Table, TableBody, TableCell,
- TableContainer, withStyles, InputAdornment,makeStyles } from './_import';
+import { Grid, TextField, Axios, Paper, SearchIcon, TableHead,TableRow, Table, TableBody, TableCell, TableContainer, withStyles, InputAdornment,makeStyles,useAuth0 } from './_import';
 
 import { timeSlots } from '../../helpers';
 
@@ -15,7 +14,7 @@ console.log('serverURL', serverUrl);
 
 const AdminRezervacie = () => {
    const classes = useStyles();
-   // const { setCennik, cennik } = useGlobalContext();
+   const { getAccessTokenSilently } = useAuth0();
 
    const [allRezervacie, setAllRezervacie] = useState([]);
    const [searchResult, setSearchResult] = useState([]);
@@ -47,29 +46,42 @@ const AdminRezervacie = () => {
    };
 
    useEffect(async () => {
-      const response = await Axios.get(`${serverUrl}/calendar/admin/getRezervacieWusers`);
-      let data = [];
-      let tmpObj = {};
-      response.data.forEach((record) => {
-         const { tstampOfDay: timestamp, startI, endI, userId, meno } = record;
-         let newObj = { startI, endI, userId, meno };
+      try {
+         const token = await getAccessTokenSilently();
+         const options = {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         };
+         const response = await Axios.get(
+            `${serverUrl}/calendar/admin/getRezervacieWusers`,
+            options
+         );
+         let data = [];
+         let tmpObj = {};
+         response.data.forEach((record) => {
+            const { tstampOfDay: timestamp, startI, endI, userId, meno } = record;
+            let newObj = { startI, endI, userId, meno };
 
-         if (tmpObj[timestamp] == undefined) {
-            tmpObj[timestamp] = [newObj];
-         } else {
-            tmpObj[timestamp]?.push(newObj);
+            if (tmpObj[timestamp] == undefined) {
+               tmpObj[timestamp] = [newObj];
+            } else {
+               tmpObj[timestamp]?.push(newObj);
+            }
+         });
+
+         for (const [key, value] of Object.entries(tmpObj)) {
+            data.push({ timestamp: parseInt(key), value });
          }
-      });
 
-      for (const [key, value] of Object.entries(tmpObj)) {
-         data.push({ timestamp: parseInt(key), value });
+         data.sort((o1, o2) => {
+            return o1.timestamp - o2.timestamp;
+         });
+         setAllRezervacie(data);
+         setSearchResult(data);
+      } catch (error) {
+         console.log('getRezervacieWusers', error);
       }
-
-      data.sort((o1, o2) => {
-         return o1.timestamp - o2.timestamp;
-      });
-      setAllRezervacie(data);
-      setSearchResult(data);
    }, []);
 
    return (

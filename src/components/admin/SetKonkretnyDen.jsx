@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 //prettier-ignore
-import {Axios, TextField, Autocomplete,KeyboardDatePicker, MuiPickersUtilsProvider,Grid,makeStyles, Paper} from './_import'
+import {Axios, TextField, Autocomplete,KeyboardDatePicker, MuiPickersUtilsProvider,Grid,makeStyles, Paper,useAuth0} from './_import'
 
 import { useForm, Controller } from 'react-hook-form';
 
@@ -19,6 +19,7 @@ const serverUrl = process.env.REACT_APP_SERVER_URL;
 
 const SetKonkretnyDen = () => {
    const classes = useStyles();
+   const { getAccessTokenSilently } = useAuth0();
    const { register, handleSubmit, control, reset, errors } = useForm({
       defaultValues: { datePicker: new moment().startOf('day') },
    });
@@ -44,9 +45,14 @@ const SetKonkretnyDen = () => {
       setKonkretnyDenCas({ od: '', doo: '' });
       setError({ state: false, mes: '' });
 
-      await Axios.post(`${serverUrl}/calendar/add-zmena-otvorenie-specificky-den`, {
-         payload: data,
-      });
+      const options = await getAuthorizationHeader();
+      await Axios.post(
+         `${serverUrl}/calendar/add-zmena-otvorenie-specificky-den`,
+         {
+            payload: data,
+         },
+         options
+      );
       setNacitatZonam(true);
 
       // TODO alert
@@ -61,9 +67,10 @@ const SetKonkretnyDen = () => {
 
    async function deleteOH(timestamp) {
       //todo token
+      const { headers } = await getAuthorizationHeader();
       const response = await Axios.delete(
          `${serverUrl}/calendar/delete-zmena-otvorenie-specificky-den`,
-         { data: { payload: timestamp } }
+         { data: { payload: timestamp }, headers }
       );
       console.log('deleteOH', response);
       if (response.status === 200) {
@@ -71,6 +78,16 @@ const SetKonkretnyDen = () => {
          setKonkretneDniOH(newData);
       }
    }
+
+   const getAuthorizationHeader = async () => {
+      const token = await getAccessTokenSilently();
+      const options = {
+         headers: {
+            Authorization: `Bearer ${token}`,
+         },
+      };
+      return options;
+   };
 
    useEffect(() => {
       if (nacitatZonam) {

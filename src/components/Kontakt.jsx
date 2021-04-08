@@ -1,8 +1,6 @@
-import { makeStyles, Paper, Typography } from '@material-ui/core';
+import { makeStyles, Paper, Tooltip, Typography, Grid } from '@material-ui/core';
 import React from 'react';
-import { Grid } from './test/_import';
 import SvgIcon from '@material-ui/core/SvgIcon';
-
 import PositionIcon from '../svgIcons/PositionIcon';
 import OtvaracieHodiny from './footer/OtvaracieHodiny';
 import MailOutlineRoundedIcon from '@material-ui/icons/MailOutlineRounded';
@@ -50,7 +48,8 @@ const Kontakt = () => {
                      <MailOutlineRoundedIcon />
                   </Grid>
                   <Grid item xs={9} sm={6}>
-                     <Typography variant='h6'>junglegymlm@gmail.com</Typography>
+                     {/* <Typography variant='h6'>junglegymlm@gmail.com</Typography> */}
+                     <BotProtectedField type='email' />
                   </Grid>
                </Grid>
 
@@ -59,7 +58,8 @@ const Kontakt = () => {
                      <PhoneAndroidRoundedIcon />
                   </Grid>
                   <Grid item xs={9} sm={6}>
-                     <Typography variant='h6'>+421904868840</Typography>
+                     {/* <Typography variant='h6'>+421 904 868840</Typography> */}
+                     <BotProtectedField type='phone' />
                   </Grid>
                </Grid>
                <Paper elevation={5} className='kontakt-paper'>
@@ -84,6 +84,44 @@ const Kontakt = () => {
 
 export default Kontakt;
 
+const BotProtectedField = ({ type }) => {
+   const [email, setEmail] = React.useState('');
+   const [phone, setPhone] = React.useState('');
+   function showEmail() {
+      setEmail('junglegymlm@gmail.com');
+   }
+   function showPhone() {
+      setPhone('+421904868840');
+   }
+   if (type === 'email') {
+      return email ? (
+         <Typography variant='h6' className={email || 'prt mail'} onClick={showEmail}>
+            {email || 'amg'}
+         </Typography>
+      ) : (
+         <Tooltip title='Kliknutím povolíš kopírovanie' arrow>
+            <Typography variant='h6' className={email || 'prt mail'} onClick={showEmail}>
+               {email || 'amg'}
+            </Typography>
+         </Tooltip>
+      );
+   }
+   if (type === 'phone') {
+      return phone ? (
+         <Typography variant='h6' className={phone || 'prt phone'} onClick={showPhone}>
+            {phone || '409'}
+         </Typography>
+      ) : (
+         <Tooltip title='Kliknutím povolíš kopírovanie' arrow>
+            <Typography variant='h6' className={phone || 'prt phone'} onClick={showPhone}>
+               {phone || '409'}
+            </Typography>
+         </Tooltip>
+      );
+   }
+   return <> </>;
+};
+
 const useStyles = makeStyles((theme) => ({
    root: {
       '& .MuiGrid-root': {
@@ -92,6 +130,7 @@ const useStyles = makeStyles((theme) => ({
       },
       '& .MuiGrid-root h6': {
          color: '#7D0000',
+         width: 'fit-content',
       },
       '& svg': {
          color: '#7D0000',

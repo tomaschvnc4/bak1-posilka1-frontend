@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 //prettier-ignore
-import { HomePage, CennikPage, GaleriaPage, KontaktPage, ProfilPage, ErrorPage, Rezervacie, Test,SluzbyPage } from '../src/pages';
+import { HomePage, CennikPage, GaleriaPage, KontaktPage, ProfilPage, ErrorPage, Rezervacie, AdminPanel,SluzbyPage } from '../src/pages';
 import './App.css';
 // import NavBar from './components/nav-bar';
 import Navbar from './components/navbar/Navbar';
@@ -23,7 +23,7 @@ function App() {
                <Route path='/kontakt' component={KontaktPage} />
                <ProtectedRoute path='/profil' component={ProfilPage} />
                <ProtectedRoute path='/rezervovat' component={Rezervacie} />
-               <Route path='/test' component={Test} />
+               <ProtectedRoute path='/adminPanel' component={AdminPanel} />
                <Route path='/*' component={ErrorPage} />
             </Switch>
          </div>

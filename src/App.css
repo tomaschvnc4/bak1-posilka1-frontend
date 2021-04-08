@@ -19,6 +19,7 @@ ul {
 
 a {
    text-decoration: none;
+   color: inherit;
 }
 
 .page-container {
@@ -260,6 +261,25 @@ Kontakt
    padding: 2%;
    background-color: rgba(255, 193, 7, 0.2) !important;
    /* background-color: green !important; */
+}
+
+.prt {
+   unicode-bidi: bidi-override;
+   direction: rtl;
+   cursor: pointer;
+}
+.prt.mail::before {
+   content: 'moc.li';
+}
+.prt.mail::after {
+   content: '@mlmygelgnuj';
+}
+
+.prt.phone::before {
+   content: '048868';
+}
+.prt.phone::after {
+   content: '124+';
 }
 
 /*

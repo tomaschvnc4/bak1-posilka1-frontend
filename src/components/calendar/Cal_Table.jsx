@@ -49,8 +49,13 @@ const Cal_Table = () => {
    return (
       <div className={classes.root}>
          <Loading2 />
-         <AlertBox isOpen={alert} setOpen={setAlert} mess={<MessageSnackBar />} severity='info' />
-         <AlertBox isOpen={alert} setOpen={setAlert} mess={<MessageSnackBar />} severity='info' />
+         <AlertBox
+            isOpen={alert}
+            setOpen={setAlert}
+            mess={<MessageSnackBar />}
+            severity='info'
+            duration={100000}
+         />
          <TableContainer component={Paper}>
             <Table className={classes.table} aria-label='customized table' stickyHeader>
                <TableHead>

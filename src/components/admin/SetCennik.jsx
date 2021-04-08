@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 //prettier-ignore
-import { Grid, TextField, Axios, Paper, TableRow, makeStyles, Table, TableBody, TableCell, TableContainer, withStyles, IconButton, CreateIcon, DeleteForeverRoundedIcon,} from './_import';
+import { Grid, TextField, Axios, Paper, TableRow, makeStyles, Table, TableBody, TableCell, TableContainer, withStyles, IconButton, CreateIcon, DeleteForeverRoundedIcon,useAuth0} from './_import';
 
 import { useGlobalContext } from '../../context/Provider2';
 import { useForm } from 'react-hook-form';
@@ -10,11 +10,12 @@ const serverUrl = process.env.REACT_APP_SERVER_URL;
 console.log('serverURL', serverUrl);
 
 const SetCennik = () => {
-   const { setCennik, cennik } = useGlobalContext();
-   const { register, handleSubmit, errors, setValue, reset } = useForm();
    const classes = useStyles();
+   const { setCennik, cennik } = useGlobalContext();
+   const { getAccessTokenSilently } = useAuth0();
+   const { register, handleSubmit, errors, setValue, reset } = useForm();
+
    const [fetchData, setFetchData] = useState(false);
-   // const [itemToEditRef, setItemToEdit] = useRef({});
    const itemToEditRef = useRef({});
 
    async function onSubmit(data) {
@@ -22,17 +23,23 @@ const SetCennik = () => {
       const { id } = itemToEditRef.current || '';
 
       const newItem = { id, poradie, title, price };
+      try {
+         const options = await getAuthorizationHeader();
+         await Axios.post(`${serverUrl}/cennik/change`, { payload: newItem }, options);
 
-      await Axios.post(`${serverUrl}/cennik/change`, { payload: newItem });
-
-      reset();
-      itemToEditRef.current = {};
-      setFetchData(!fetchData);
+         reset();
+         itemToEditRef.current = {};
+         setFetchData(!fetchData);
+      } catch (error) {
+         console.log(error);
+      }
    }
 
    async function deleteItem(id) {
+      const { headers } = await getAuthorizationHeader();
       const response = await Axios.delete(`${serverUrl}/cennik/deleteItem`, {
          data: { payload: id },
+         headers,
       });
       if (response.status === 200) {
          setFetchData(!fetchData);
@@ -58,6 +65,16 @@ const SetCennik = () => {
       setValue('title', title);
       setValue('price', price);
    }
+
+   const getAuthorizationHeader = async () => {
+      const token = await getAccessTokenSilently();
+      const options = {
+         headers: {
+            Authorization: `Bearer ${token}`,
+         },
+      };
+      return options;
+   };
 
    useEffect(async () => {
       getCennik();

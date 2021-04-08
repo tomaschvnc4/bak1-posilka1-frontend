@@ -88,7 +88,7 @@ const Cell = ({ timestamp, index }) => {
    */
    return (
       <>
-         {index}
+         {/* {index} */}
          <ThemeProvider theme={themeGreenRed}>
             {isOpen ? (
                <Button

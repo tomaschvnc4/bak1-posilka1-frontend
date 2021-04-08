@@ -20,7 +20,7 @@ import CreateIcon from '@material-ui/icons/Create';
 import CheckCircleOutlineRoundedIcon from '@material-ui/icons/CheckCircleOutlineRounded';
 import themeGreenRed from '../../themes/customPallete';
 import { capitalize } from '../../helpers';
-import { Axios } from '../test/_import';
+import Axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';

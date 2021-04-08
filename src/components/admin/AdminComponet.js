@@ -21,7 +21,7 @@ const timeSlots = [
    }),
 ];
 
-const TestComponet = () => {
+const AdminComponet = () => {
    const classes = useStyles();
    const { register, handleSubmit } = useForm(); // potom skusit cez controll aby bolo mozne mat defaul hodnotu bez prerendrovana vzdy pri zmene
    const { calSettings, setCalSettings, setPosunDay } = useGlobalContext();
@@ -193,7 +193,7 @@ const TestComponet = () => {
    );
 };
 
-export default TestComponet;
+export default AdminComponet;
 
 // const SetKonkretnyDen = () => {
 //    const { register, handleSubmit, control, reset, errors } = useForm({

@@ -4,7 +4,7 @@ import GaleriaPage from './GaleriaPage';
 import KontaktPage from './KontaktPage';
 import ProfilPage from './ProfilPage';
 import Rezervacie from './Rezervacie';
-import Test from './Test';
+import AdminPanel from './AdminPanel';
 import ErrorPage from './ErrorPage';
 import SluzbyPage from './SluzbyPage';
 
@@ -16,6 +16,6 @@ export {
    ProfilPage,
    Rezervacie,
    ErrorPage,
-   Test,
+   AdminPanel,
    SluzbyPage,
 };

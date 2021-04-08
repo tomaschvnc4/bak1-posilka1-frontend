@@ -1,13 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 //prettier-ignore
-import {Grid,TextField,Axios,Paper,TableRow,makeStyles,Table,TableBody,TableCell,TableContainer,withStyles,InputAdornment,SearchIcon,} from './_import';
+import {Grid,TextField,Axios,Paper,TableRow,makeStyles,Table,TableBody,TableCell,TableContainer,withStyles,InputAdornment,SearchIcon,useAuth0} from './_import';
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
 console.log('serverURL', serverUrl);
 
 const AdminPouzivatelia = () => {
    const classes = useStyles();
+   const { getAccessTokenSilently } = useAuth0();
 
    const [allUsers, setAllUsers] = useState([]);
    const [searchResult, setSearchResult] = useState([]);
@@ -30,9 +31,19 @@ const AdminPouzivatelia = () => {
    };
 
    useEffect(async () => {
-      const response = await Axios.get(`${serverUrl}/profil/admin/getAll`);
-      setAllUsers(response.data);
-      setSearchResult(response.data);
+      const token = await getAccessTokenSilently();
+      const options = {
+         headers: {
+            Authorization: `Bearer ${token}`,
+         },
+      };
+      try {
+         const response = await Axios.get(`${serverUrl}/profil/admin/getAll`, options);
+         setAllUsers(response.data);
+         setSearchResult(response.data);
+      } catch (error) {
+         console.log('getAll', error);
+      }
    }, []);
 
    console.log('render');

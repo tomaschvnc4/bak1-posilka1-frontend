@@ -1,7 +1,7 @@
 import { Divider, Grid, Typography } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { useGlobalContext } from '../../context/Provider2';
-import { Axios } from '../test/_import';
+import Axios from 'axios';
 const serverUrl = process.env.REACT_APP_SERVER_URL;
 const Cennik = () => {
    const { cennik, setCennik } = useGlobalContext();
@@ -9,6 +9,10 @@ const Cennik = () => {
    useEffect(async () => {
       const response = await Axios.get(`${serverUrl}/cennik/get`);
       const { data, status } = response;
+
+      data.sort((o1, o2) => {
+         return o1.poradie - o2.poradie;
+      });
 
       status === 200 && setCennik(data);
    }, []);
