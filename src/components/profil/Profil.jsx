@@ -26,6 +26,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useGlobalContext } from '../../context/Provider2';
 import clsx from 'clsx';
+import Loading2 from '../loading2';
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
 
@@ -40,6 +41,10 @@ const Profil = () => {
    let { picture } = user;
    console.log('dbUser', dbUser);
    console.count('render Profil');
+
+   if (!dbUser.email) {
+      return <Loading2 />;
+   }
 
    return (
       <Paper
