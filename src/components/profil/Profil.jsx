@@ -38,8 +38,9 @@ const Profil = () => {
 
    const { user } = useAuth0();
    let { picture } = user;
-
+   console.log('dbUser', dbUser);
    console.count('render Profil');
+
    return (
       <Paper
          component='main'
