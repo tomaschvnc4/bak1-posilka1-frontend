@@ -54,8 +54,7 @@ const Profil = () => {
          },
       };
       console.log('change password');
-      axios
-         .request(options)
+      Axios.request(options)
          .then(function (response) {
             console.log(response.data);
          })
