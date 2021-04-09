@@ -30,6 +30,7 @@ import Loading2 from '../loading2';
 import Loading from '../loading';
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
+const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 
 const Profil = () => {
    const classes = useStyles();
@@ -40,7 +41,29 @@ const Profil = () => {
 
    const { user } = useAuth0();
    let { picture } = user;
-   console.log('dbUser', dbUser);
+
+   function changePassword() {
+      let options = {
+         method: 'POST',
+         url: `https://${domain}/dbconnections/change_password`,
+         headers: { 'content-type': 'application/json' },
+         data: {
+            client_id: user.sub,
+            email: '',
+            connection: 'Username-Password-Authentication',
+         },
+      };
+      console.log('change password');
+      axios
+         .request(options)
+         .then(function (response) {
+            console.log(response.data);
+         })
+         .catch(function (error) {
+            console.error(error);
+         });
+   }
+
    console.count('render Profil');
 
    if (!dbUser.email) {
@@ -110,6 +133,19 @@ const Profil = () => {
                                  size='small'
                                  color='primary'
                                  onClick={() => setEditTelefon(!editTelefon)}>
+                                 <CreateIcon />
+                              </IconButton>
+                           </StyledTableCell>
+                        </StyledTableRow>
+                        <StyledTableRow>
+                           <StyledTableCell>
+                              <Typography variant='h6'>Zmena hesla:</Typography>
+                           </StyledTableCell>
+                           <StyledTableCell>
+                              <IconButton
+                                 size='small'
+                                 color='primary'
+                                 onClick={() => changePassword}>
                                  <CreateIcon />
                               </IconButton>
                            </StyledTableCell>
