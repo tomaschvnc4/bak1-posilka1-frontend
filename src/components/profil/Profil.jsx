@@ -27,6 +27,7 @@ import * as yup from 'yup';
 import { useGlobalContext } from '../../context/Provider2';
 import clsx from 'clsx';
 import Loading2 from '../loading2';
+import Loading from '../loading';
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
 
@@ -43,7 +44,8 @@ const Profil = () => {
    console.count('render Profil');
 
    if (!dbUser.email) {
-      return <Loading2 />;
+      console.log('profil loading render');
+      return <Loading />;
    }
 
    return (

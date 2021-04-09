@@ -25,7 +25,7 @@ const AuthenticationButton = () => {
          <Link
             to=''
             onClick={() => {
-               loginWithRedirect({ language: 'sk', options: { language: 'sk' } });
+               loginWithRedirect();
             }}>
             Prihlásiť
          </Link>
