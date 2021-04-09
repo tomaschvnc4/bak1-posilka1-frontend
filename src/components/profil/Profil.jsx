@@ -144,7 +144,7 @@ const Profil = () => {
                               <IconButton
                                  size='small'
                                  color='primary'
-                                 onClick={() => changePassword}>
+                                 onClick={() => changePassword()}>
                                  <CreateIcon />
                               </IconButton>
                            </StyledTableCell>
