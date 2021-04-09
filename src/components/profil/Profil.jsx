@@ -45,7 +45,7 @@ const Profil = () => {
 
    if (!dbUser.email) {
       console.log('profil loading render');
-      return <Loading />;
+      return <Loading2 />;
    }
 
    return (
