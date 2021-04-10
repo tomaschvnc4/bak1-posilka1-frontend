@@ -141,10 +141,7 @@ const Profil = () => {
                               <Typography variant='h6'>Zmena hesla:</Typography>
                            </StyledTableCell>
                            <StyledTableCell>
-                              <IconButton
-                                 size='small'
-                                 color='primary'
-                                 onClick={() => changePassword()}>
+                              <IconButton size='small' color='primary' onClick={changePassword}>
                                  <CreateIcon />
                               </IconButton>
                            </StyledTableCell>
