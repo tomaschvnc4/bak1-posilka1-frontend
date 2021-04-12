@@ -1,12 +1,11 @@
 import React from 'react';
-import ExternalApi from '../auth/external-api';
 import Profil from '../components/profil/Profil';
-
+import { MetaDecorator, metaData } from '../components/metaDecorator';
 const ProfilPage = () => {
    return (
       <div>
+         <MetaDecorator title={metaData.profil.title} description={metaData.profil.description} />
          <Profil />
-         {/* <ExternalApi /> */}
       </div>
    );
 };

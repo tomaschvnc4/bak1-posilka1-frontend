@@ -1,0 +1,38 @@
+{
+   "cennik": {
+      "title": "Cenník | Jungle Gym",
+      "description": "Cenník vstupov pre fitness centrum Jungle Gym Liptovský Mikuláš"
+   },
+   "home": {
+      "title": "Jungle Gym | Liptovský Mikuláš",
+      "description": "Základné informácie o fitness centre v Liptovskom Mikuláši"
+   },
+   "sluzby": {
+      "title": "Služby | Jungle Gym",
+      "description": "Služby, ktoré ponúka fitness centrum Jungle Gym v Liptovskom Mikuláši"
+   },
+   "galeria": {
+      "title": "Galéria | Jungle Gym",
+      "description": "Galéria fitness centra Jungle Gym"
+   },
+   "kontakt": {
+      "title": "Kontakt | Jungle Gym",
+      "description": "Kontaktné informácie na prevádzkovateľa fitness centra Jungle Gym"
+   },
+   "admin": {
+      "title": "Admin panel | Jungle Gym",
+      "description": "Nastavenia stranky pre administratora"
+   },
+   "rezervacie": {
+      "title": "Rezervácie | Jungle Gym",
+      "description": "Kalendár pre vytvorenie rezervácie vo fitness centre Jungle Gym"
+   },
+   "profil": {
+      "title": "Profil| Jungle Gym",
+      "description": "Profilové údaje"
+   },
+   "error": {
+      "title": "404 | Jungle Gym",
+      "description": "Stránka sa nenašla"
+   }
+}
