@@ -17,8 +17,8 @@ const Loading2 = () => {
       //       className={clsx('semiTransparenDiv', true ? 'show-loading' : '')}></div>
       // </div>
 
-      // <div className={clsx('loading', isLoadingCalData && 'show-loading')}>
-      <div className={clsx('loading', 'show-loading')}>
+      // <div className={clsx('loading', 'show-loading')}>
+      <div className={clsx('loading', isLoadingCalData && 'show-loading')}>
          <div className='lds-dual-ring hide'></div>
          {/* <img src={loadingImg} alt='Loading...' /> */}
       </div>
