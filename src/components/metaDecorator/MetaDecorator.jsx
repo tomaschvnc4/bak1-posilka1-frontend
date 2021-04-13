@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 const MetaDecorator = ({ title, description }) => {
    return (
       <Helmet>
+         <meta charSet='utf-8' />
          <title>{title}</title>
          <meta name='description' content={description} data-react-helmet='true'></meta>
       </Helmet>
