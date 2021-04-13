@@ -32,7 +32,7 @@ const Calendar = () => {
    }
 
    return (
-      <React.Fragment style={{ margin: '1%' }}>
+      <React.Fragment>
          {refuse ? (
             <Paper className='rezervovat-warning'>
                <Typography color='secondary'>
@@ -41,9 +41,8 @@ const Calendar = () => {
                <Link to='/profil'>Profil</Link>
             </Paper>
          ) : calSettings.povolitKalendar ? (
-            <div>
+            <div style={{ margin: '1%' }}>
                <CalNav />
-               {!isLoadingCal && console.log('toto rendrujem dva krat')}
                <CalTable />
             </div>
          ) : (

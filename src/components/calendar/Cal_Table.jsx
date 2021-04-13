@@ -8,6 +8,7 @@ import { useGlobalContext } from '../../context/Provider2';
 import Loading2 from '../loading2';
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import AlertBox from '../AlertBox';
+import { timeSlots } from '../../helpers';
 
 const Cal_Table = () => {
    const classes = useStyles();
@@ -98,6 +99,11 @@ const Cal_Table = () => {
                         }
                         return (
                            <StyledTableCell key={index}>
+                              <Typography variant='body2'>
+                                 {minI == -1
+                                    ? 'bez rezervácie'
+                                    : `${timeSlots[minI]} - ${timeSlots[maxI + 1]}`}
+                              </Typography>
                               <Typography color='primary' variant='body2'>
                                  {`${aktLimit * 0.5} / ${calSettings.dennyLimit * 0.5} hod`}
                               </Typography>
