@@ -8,7 +8,10 @@ const MetaDecorator = ({ title, description }) => {
          <meta charSet='utf-8' />
          <title data-react-helmet='true'>{title}</title>
          {/* <meta name='description' content={description} data-react-helmet='true'></meta> */}
-         <meta data-react-helmet='true' property='og:description' content={description}></meta>
+         <meta
+            data-react-helmet='true'
+            property='og:description'
+            content='hjdhfkhashfkjhakhfkjfshkjh'></meta>
          <meta
             data-react-helmet='true'
             property='og:title'

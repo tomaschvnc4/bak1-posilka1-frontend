@@ -22,6 +22,10 @@ const theme = createMuiTheme({
 ReactDOM.render(
    // <React.StrictMode>
    <Router>
+      <Helmet>
+         <title>rooot</title>
+         <meta name='description' content='jano' />
+      </Helmet>
       <Auth0ProviderWithHistory>
          <AppProvider>
             <ThemeProvider theme={theme}>
