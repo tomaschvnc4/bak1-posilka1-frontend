@@ -50,6 +50,7 @@ const Cal_Table = () => {
       <div className={classes.root}>
          <Loading2 />
          <AlertBox
+            aria-label='AlertBox'
             isOpen={alert}
             setOpen={setAlert}
             mess={<MessageSnackBar />}
@@ -57,7 +58,7 @@ const Cal_Table = () => {
             duration={100000}
          />
          <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label='customized table' stickyHeader>
+            <Table aria-label='customized table' stickyHeader>
                <TableHead>
                   <TableRow>
                      <StyledTableCell>
