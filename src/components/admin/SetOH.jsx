@@ -68,7 +68,13 @@ const SetOH = () => {
                         label={'Kapacita'}
                         name='kapacita'
                         type='number'
-                        inputRef={register}
+                        inputRef={register({
+                           required: 'Pole obsahuje nepovolené znaky!',
+                           pattern: {
+                              value: /^[0-9,]*$/,
+                              message: 'Pole obsahuje nepovolené znaky!',
+                           },
+                        })}
                         InputLabelProps={{
                            shrink: true,
                         }}
@@ -79,7 +85,13 @@ const SetOH = () => {
                         name={'maxNextDays'}
                         type='number'
                         label={'Dni dopredu'}
-                        inputRef={register}
+                        inputRef={register({
+                           required: 'Pole obsahuje nepovolené znaky!',
+                           pattern: {
+                              value: /^[0-9,]*$/,
+                              message: 'Pole obsahuje nepovolené znaky!',
+                           },
+                        })}
                         InputLabelProps={{
                            shrink: true,
                         }}
@@ -91,7 +103,13 @@ const SetOH = () => {
                         name='dennyLimit'
                         type='number'
                         label='Denny limit'
-                        inputRef={register}
+                        inputRef={register({
+                           required: 'Pole obsahuje nepovolené znaky!',
+                           pattern: {
+                              value: /^[0-9,]*$/,
+                              message: 'Pole obsahuje nepovolené znaky!',
+                           },
+                        })}
                         InputLabelProps={{
                            shrink: true,
                         }}

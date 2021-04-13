@@ -12,7 +12,7 @@ import { timeSlots } from '../../helpers';
 import MomentUtils from '@date-io/moment';
 import moment from 'moment';
 import 'moment/locale/sk';
-import { Checkbox, FormControlLabel } from '@material-ui/core';
+import { Checkbox, FormControlLabel, Typography } from '@material-ui/core';
 moment.locale('sk');
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
@@ -37,7 +37,7 @@ const SetKonkretnyDen = () => {
       data.zavrete = checked;
       console.log(data.datePicker);
       if (isNaN(data.datePicker)) {
-         setError({ state: true, mes: 'nespravny format casu' });
+         setError({ state: true, mes: 'Nesprávny formát času!' });
          return;
       }
 
@@ -114,7 +114,7 @@ const SetKonkretnyDen = () => {
             <Grid container component='section' alignItems='center' direction='column'>
                <form onSubmit={handleSubmit(myOnSubmit)}>
                   <Grid container alignItems='center' direction='column'>
-                     {error.state && <p color='secondary'>{error.mes}</p>}
+                     {error.state && <Typography color='secondary'>{error.mes}</Typography>}
 
                      <Controller
                         name='datePicker'
