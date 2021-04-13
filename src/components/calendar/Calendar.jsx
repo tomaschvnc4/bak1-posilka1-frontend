@@ -32,7 +32,7 @@ const Calendar = () => {
    }
 
    return (
-      <>
+      <React.Fragment style={{ margin: '1%' }}>
          {refuse ? (
             <Paper className='rezervovat-warning'>
                <Typography color='secondary'>
@@ -53,7 +53,7 @@ const Calendar = () => {
                </Typography>
             </Paper>
          )}
-      </>
+      </React.Fragment>
    );
 };
 
