@@ -11,7 +11,7 @@ const serverUrl = process.env.REACT_APP_SERVER_URL;
 
 const SetOH = () => {
    const classes = useStyles();
-   const { register, handleSubmit, setValue, errors, getValues, watch } = useForm(); // potom skusit cez controll aby bolo mozne mat defaul hodnotu bez prerendrovana vzdy pri zmene
+   const { register, handleSubmit, setValue, errors } = useForm(); // potom skusit cez controll aby bolo mozne mat defaul hodnotu bez prerendrovana vzdy pri zmene
    const { calSettings, setCalSettings, setPosunDay, getAccessTokenSilently } = useGlobalContext();
 
    const [newValues, setNewValues] = useState({});
@@ -68,6 +68,8 @@ const SetOH = () => {
                         label={'Kapacita'}
                         name='kapacita'
                         type='number'
+                        error={errors.hasOwnProperty('kapacita')}
+                        helperText={errors.kapacita?.message}
                         inputRef={register({
                            required: 'Pole obsahuje nepovolené znaky!',
                            pattern: {
@@ -85,6 +87,8 @@ const SetOH = () => {
                         name={'maxNextDays'}
                         type='number'
                         label={'Dni dopredu'}
+                        error={errors.hasOwnProperty('maxNextDays')}
+                        helperText={errors.maxNextDays?.message}
                         inputRef={register({
                            required: 'Pole obsahuje nepovolené znaky!',
                            pattern: {
@@ -103,6 +107,8 @@ const SetOH = () => {
                         name='dennyLimit'
                         type='number'
                         label='Denny limit'
+                        error={errors.hasOwnProperty('dennyLimit')}
+                        helperText={errors.dennyLimit?.message}
                         inputRef={register({
                            required: 'Pole obsahuje nepovolené znaky!',
                            pattern: {
