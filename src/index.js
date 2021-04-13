@@ -8,6 +8,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Auth0ProviderWithHistory from './auth/auth0-provider-with-history';
 import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core';
+import { Helmet } from 'react-helmet';
 // import reportWebVitals from './reportWebVitals';
 // import { AppProvider } from './_contex';
 
