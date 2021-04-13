@@ -1,32 +1,32 @@
 export default [
    {
       id: 1,
-      title: 'Jednorázový vstup',
-      price: 3,
+      popis: 'Jednorázový vstup',
+      cena: 3,
    },
    {
       id: 2,
-      title: 'Jednorázový vstup - Študent',
-      price: 2.5,
+      popis: 'Jednorázový vstup - Študent',
+      cena: 2.5,
    },
    {
       id: 3,
-      title: '10 vstupová permanentka',
-      price: 30,
+      popis: '10 vstupová permanentka',
+      cena: 30,
    },
    {
       id: 4,
-      title: '10 vstupová permanentka - Študent',
-      price: 25,
+      popis: '10 vstupová permanentka - Študent',
+      cena: 25,
    },
    {
       id: 5,
-      title: 'Mesačná permanentka',
-      price: 30,
+      popis: 'Mesačná permanentka',
+      cena: 30,
    },
    {
       id: 6,
-      title: 'Mesačná permanentka - Študent',
-      price: 25,
+      popis: 'Mesačná permanentka - Študent',
+      cena: 25,
    },
 ];

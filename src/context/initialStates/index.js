@@ -36,7 +36,7 @@ export const userInitState = {
 };
 
 export const otherInitState = {
-   cennik: [], //pole objektov [{id:'',title:'',price:''},{},...]
+   cennik: [], //pole objektov [{id:'',popis:'',cena:''},{},...]
 };
 
 export const nextInitState = {};

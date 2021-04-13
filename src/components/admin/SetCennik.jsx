@@ -19,10 +19,10 @@ const SetCennik = () => {
    const itemToEditRef = useRef({});
 
    async function onSubmit(data) {
-      const { id: poradie, title, price } = data;
+      const { id: poradie, popis, cena } = data;
       const { id } = itemToEditRef.current || '';
 
-      const newItem = { id, poradie, title, price };
+      const newItem = { id, poradie, popis, cena };
       try {
          const options = await getAuthorizationHeader();
          await Axios.post(`${serverUrl}/cennik/change`, { payload: newItem }, options);
@@ -58,12 +58,12 @@ const SetCennik = () => {
    }
 
    function edit(index) {
-      const { title, price } = cennik[index];
+      const { popis, cena } = cennik[index];
 
       itemToEditRef.current = cennik[index];
       setValue('id', index);
-      setValue('title', title);
-      setValue('price', price);
+      setValue('popis', popis);
+      setValue('cena', cena);
    }
 
    const getAuthorizationHeader = async () => {
@@ -125,9 +125,9 @@ const SetCennik = () => {
                      <TextField
                         multiline
                         label='Názov'
-                        name='title'
-                        error={errors.hasOwnProperty('title')}
-                        helperText={errors.title?.message}
+                        name='popis'
+                        error={errors.hasOwnProperty('popis')}
+                        helperText={errors.popis?.message}
                         inputRef={register({
                            pattern: {
                               value: /^[a-zA-ZÀ-ž0-9_ -]*$/,
@@ -141,10 +141,10 @@ const SetCennik = () => {
                      />
                      <TextField
                         label='Cena'
-                        name='price'
+                        name='cena'
                         type='number'
-                        error={errors.hasOwnProperty('price')}
-                        helperText={errors.price?.message}
+                        error={errors.hasOwnProperty('cena')}
+                        helperText={errors.cena?.message}
                         inputRef={register({
                            required: 'Pole obsahuje nepovolené znaky!',
                            pattern: {
@@ -173,13 +173,13 @@ const SetCennik = () => {
                      <Table className={classes.table}>
                         <TableBody>
                            {cennik.map((item, index) => {
-                              const { id, title, price, poradie } = item || {};
+                              const { id, popis, cena, poradie } = item || {};
                               return (
-                                 title && (
+                                 popis && (
                                     <StyledTableRow key={index}>
                                        <StyledTableCell>{poradie}.</StyledTableCell>
-                                       <StyledTableCell>{title}</StyledTableCell>
-                                       <StyledTableCell>{price}€</StyledTableCell>
+                                       <StyledTableCell>{popis}</StyledTableCell>
+                                       <StyledTableCell>{cena}€</StyledTableCell>
                                        <StyledTableCell style={{ display: 'inline-flex' }}>
                                           <IconButton
                                              size='small'

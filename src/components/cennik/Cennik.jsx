@@ -35,7 +35,7 @@ const Cennik = () => {
             {/* <div className='divider-solid'></div> */}
 
             {cennik.map((item, id) => {
-               const { title, price } = item;
+               const { popis, cena } = item;
                return (
                   <Grid
                      container
@@ -45,8 +45,8 @@ const Cennik = () => {
                      justify='space-between'
                      component='article'
                      key={id}>
-                     <Typography variant='subtitle1'>{title}</Typography>
-                     <Typography variant='subtitle1'>{price}€</Typography>
+                     <Typography variant='subtitle1'>{popis}</Typography>
+                     <Typography variant='subtitle1'>{cena}€</Typography>
                   </Grid>
                );
             })}
