@@ -39,7 +39,7 @@ export default {
    minT: '07:00',
    workingMaxT: '11:00',
    workingMinT: '07:00',
-   enableKalendar: 0,
+   povolitKalendar: 0,
 
    maxNextDaysXS = 7, //=maxNextDays + skryte dni na rozliseni XS ..tj +3
 };

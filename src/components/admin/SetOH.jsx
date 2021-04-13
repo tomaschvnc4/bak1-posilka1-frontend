@@ -42,7 +42,7 @@ const SetOH = () => {
       setValue('kapacita', calSettings.kapacita);
       setValue('maxNextDays', calSettings.maxNextDays);
       setValue('dennyLimit', calSettings.dennyLimit);
-      setChecked(!!calSettings.enableKalendar);
+      setChecked(!!calSettings.povolitKalendar);
    }, [calSettings]);
 
    console.count('render - <SetOH />');
@@ -203,7 +203,7 @@ const SetOH = () => {
                      <FormControlLabel
                         control={
                            <Checkbox
-                              name='enableKalendar'
+                              name='povolitKalendar'
                               checked={checked}
                               color='primary'
                               onChange={() => setChecked(!checked)}

@@ -40,7 +40,7 @@ const Calendar = () => {
                </Typography>
                <Link to='/profil'>Profil</Link>
             </Paper>
-         ) : calSettings.enableKalendar ? (
+         ) : calSettings.povolitKalendar ? (
             <div>
                <CalNav />
                {!isLoadingCal && console.log('toto rendrujem dva krat')}
