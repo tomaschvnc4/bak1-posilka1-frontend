@@ -5,10 +5,8 @@ import PropTypes from 'prop-types';
 const MetaDecorator = ({ title, description }) => {
    return (
       <Helmet>
-         <head>
-            <title>{title}</title>
-            <meta name='description' content={description} data-react-helmet='true'></meta>
-         </head>
+         <title>{title}</title>
+         <meta name='description' content={description} data-react-helmet='true'></meta>
       </Helmet>
    );
 };
