@@ -140,11 +140,11 @@ const Profil = () => {
                            <StyledTableCell>
                               <Typography variant='h6'>Zmena hesla:</Typography>
                            </StyledTableCell>
-                           <StyledTableCell>
+                           {/* <StyledTableCell>
                               <IconButton size='small' color='primary' onClick={changePassword}>
                                  <CreateIcon />
                               </IconButton>
-                           </StyledTableCell>
+                           </StyledTableCell> */}
                         </StyledTableRow>
                      </TableBody>
                   </Table>
