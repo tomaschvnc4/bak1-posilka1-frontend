@@ -1,14 +1,19 @@
-import { makeStyles, Paper, Tooltip, Typography, Grid } from '@material-ui/core';
 import React from 'react';
-import SvgIcon from '@material-ui/core/SvgIcon';
+import { makeStyles, Paper, Tooltip, Typography, Grid, SvgIcon } from '@material-ui/core';
 import PositionIcon from '../svgIcons/PositionIcon';
 import OtvaracieHodiny from './footer/OtvaracieHodiny';
 import MailOutlineRoundedIcon from '@material-ui/icons/MailOutlineRounded';
 import PhoneAndroidRoundedIcon from '@material-ui/icons/PhoneAndroidRounded';
 import clsx from 'clsx';
+import { useGlobalContext } from '../context/Provider2';
+
+import moment from 'moment';
+import 'moment/locale/sk';
+moment.locale('sk');
 
 const Kontakt = () => {
    const classes = useStyles();
+   const { konkretneDniOH } = useGlobalContext();
    return (
       <main className='kontakt-main-container'>
          <Typography variant='h3'>
@@ -64,6 +69,30 @@ const Kontakt = () => {
                </Grid>
                <Paper elevation={5} className='kontakt-paper'>
                   <OtvaracieHodiny />
+                  {konkretneDniOH.length != 0 && (
+                     <div className='zmenaOH'>
+                        {console.log(konkretneDniOH)}
+                        <Typography color='secondary' variant='body1' component='h6'>
+                           Zmena otváracích hodín!
+                        </Typography>
+                        {konkretneDniOH.map((item) => {
+                           const { timestamp, od, do: doo, zavrete } = item;
+                           return (
+                              timestamp && (
+                                 <Typography
+                                    // style={{ display: 'flex' }}
+                                    key={timestamp}
+                                    variant='body1'>
+                                    →&nbsp;{moment(timestamp).format('dd-DD.MM.YYYY')}&nbsp;
+                                    {od}&nbsp;
+                                    {doo}
+                                    {!!zavrete && 'zavreté'}
+                                 </Typography>
+                              )
+                           );
+                        })}
+                     </div>
+                  )}
                </Paper>
                {/* <SvgIcon viewBox='0 0 50 50'>
                   <PositionIcon />
@@ -138,6 +167,14 @@ const useStyles = makeStyles((theme) => ({
       },
       '& p,span': {
          color: 'black',
+      },
+      '& .zmenaOH': {
+         marginTop: '5%',
+         '& h6': {
+            display: 'flex',
+            justifyContent: 'center',
+            fontWeight: 'bold',
+         },
       },
    },
 }));

@@ -30,8 +30,8 @@ const AppProvider = ({ children }) => {
    const [arrTime, setArrTime] = useState(calendarInitState.arrTime);
    const [arrReserve, setArrReserve] = useState(calendarInitState.arrReserve);
    const [userSelect, setUserSelect] = useState(calendarInitState.userSelect);
-   const [maxNextDays, setMaxNextDays] = useState(calendarInitState.maxNextDays); //treba prerobit na data v settings
-   const [kapacity, setKapacity] = useState(calendarInitState.kapacity); //treba prerobit na data v settings
+   // const [maxNextDays, setMaxNextDays] = useState(calendarInitState.maxNextDays); //treba prerobit na data v settings
+   // const [kapacity, setKapacity] = useState(calendarInitState.kapacity); //treba prerobit na data v settings
    const [isLoadingCal, setIsLoadingCal] = useState(true);
    const [isLoadingCalData, setIsLoadingCalData] = useState(true);
 
@@ -400,9 +400,7 @@ const AppProvider = ({ children }) => {
             //OTHER STATE
             cennik,
             setCennik,
-            maxNextDays,
             posunDayRef,
-            kapacity,
             isLoadingCal,
             setIsLoadingCal,
             isLoadingCalData,
