@@ -8,7 +8,7 @@ const Rezervacie = () => {
             title={metaData.rezervacie.title}
             description={metaData.rezervacie.description}
          />
-         <Calendar />;
+         <Calendar />
       </div>
    );
 };
