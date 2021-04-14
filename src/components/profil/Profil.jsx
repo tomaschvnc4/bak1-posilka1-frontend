@@ -136,16 +136,16 @@ const Profil = () => {
                               </IconButton>
                            </StyledTableCell>
                         </StyledTableRow>
-                        <StyledTableRow>
+                        {/* <StyledTableRow>
                            <StyledTableCell>
                               <Typography variant='h6'>Zmena hesla:</Typography>
                            </StyledTableCell>
-                           {/* <StyledTableCell>
+                           <StyledTableCell>
                               <IconButton size='small' color='primary' onClick={changePassword}>
                                  <CreateIcon />
                               </IconButton>
-                           </StyledTableCell> */}
-                        </StyledTableRow>
+                           </StyledTableCell>
+                        </StyledTableRow> */}
                      </TableBody>
                   </Table>
                </TableContainer>
