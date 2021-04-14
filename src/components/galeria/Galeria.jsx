@@ -1,8 +1,17 @@
 import { Grid, makeStyles, Paper, Typography } from '@material-ui/core';
 import React from 'react';
 import image from '../../images/jungleGym.jpg';
+
 const Galeria = () => {
    const classes = useStyles();
+
+   function importAll(r) {
+      return r.keys().map(r);
+   }
+   let listOfImages = [];
+   listOfImages = importAll(require.context('../../images/galeria', false, /\.(png|jpe?g|svg)$/));
+   console.log(listOfImages);
+
    return (
       <main className='kontakt-main-container galeria'>
          <Typography variant='h3'>
@@ -10,7 +19,13 @@ const Galeria = () => {
          </Typography>
 
          <Grid container className={classes.root} spacing={5}>
-            <Grid container item md={4} sm={6} justify='center'>
+            {listOfImages.map((iimage, index) => (
+               <Grid container item md={4} sm={6} justify='center' key={index}>
+                  <img src={iimage.default} />
+                  {console.log(iimage)}
+               </Grid>
+            ))}
+            {/* <Grid container item md={4} sm={6} justify='center'>
                <img src={image} />
             </Grid>
             <Grid container item md={4} sm={6} justify='center'>
@@ -24,10 +39,7 @@ const Galeria = () => {
             </Grid>
             <Grid container item md={4} sm={6} justify='center'>
                <img src={image} />
-            </Grid>
-            <Grid container item md={4} sm={6} justify='center'>
-               <img src={image} />
-            </Grid>
+            </Grid> */}
          </Grid>
       </main>
    );
