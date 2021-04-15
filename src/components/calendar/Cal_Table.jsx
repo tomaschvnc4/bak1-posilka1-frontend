@@ -111,7 +111,8 @@ const Cal_Table = () => {
                                  color='secondary'
                                  style={{ fontWeight: '500' }}
                                  onClick={() => zrusitVyber(timestamp)}>
-                                 Zrušiť
+                                 {/* Zrušiť */}
+                                 Vyčistiť
                               </Typography>
                            </StyledTableCell>
                         );
