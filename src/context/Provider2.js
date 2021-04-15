@@ -57,7 +57,7 @@ const AppProvider = ({ children }) => {
    // console.log('calSettings', calSettings);
 
    const theme = useTheme();
-   const isMobile = useMediaQuery(theme.breakpoints.only('xs'));
+   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
    ///////////////////////////////////////////////////////////////////////////////////////////
 
