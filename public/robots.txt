@@ -1,3 +1,4 @@
-# https://www.robotstxt.org/robotstxt.html
-User-agent: *
-Disallow:
+User-Agent: *
+Allow: /
+Sitemap: https://www.junglegymlm.sk/sitemap.xml
+Sitemap: https://junglegymlm.sk/sitemap.xml
