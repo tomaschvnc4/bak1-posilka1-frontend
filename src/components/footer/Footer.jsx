@@ -10,6 +10,7 @@ import moment from 'moment';
 import 'moment/locale/sk';
 import FacebookIcon from '../../svgIcons/FacebookIcon';
 import OtvaracieHodiny from './OtvaracieHodiny';
+import { ZmenaOtvaracichHodin } from '../Kontakt';
 
 moment().locale('sk');
 
@@ -32,6 +33,7 @@ const Footer = () => {
                      <span>06:00-18:00</span>
                   </div> */}
                   <OtvaracieHodiny />
+                  <ZmenaOtvaracichHodin />
                </Grid>
                {/* -->druhy stlpec */}
                <Grid
@@ -78,7 +80,7 @@ const Footer = () => {
             <div className='copyright'>
                <Typography variant='body2'>
                   © 2021 - {moment().format('YYYY')}{' '}
-                  <span className='clr-yellow'>junglegym.sk</span>
+                  <span className='clr-yellow'>junglegymlm.sk</span>
                </Typography>
             </div>
          </div>

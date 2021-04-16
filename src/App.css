@@ -443,7 +443,7 @@ REZERVOVAT
 ===============
 */
 
-.rezervovat-warning {
+.warning {
    width: 70%;
    margin: auto;
    margin-top: 2%;
@@ -452,4 +452,10 @@ REZERVOVAT
    display: flex;
    flex-direction: column;
    align-items: center;
+}
+.warning .MuiButton-root {
+   margin-top: 1%;
+}
+.warning img {
+   width: 200px;
 }

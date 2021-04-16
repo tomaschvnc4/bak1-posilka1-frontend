@@ -10,7 +10,6 @@ const Galeria = () => {
    }
    let listOfImages = [];
    listOfImages = importAll(require.context('../../images/galeria', false, /\.(png|jpe?g|svg)$/));
-   console.log(listOfImages);
 
    return (
       <main className='kontakt-main-container galeria'>
@@ -22,7 +21,6 @@ const Galeria = () => {
             {listOfImages.map((iimage, index) => (
                <Grid container item md={4} sm={6} justify='center' key={index}>
                   <img src={iimage.default} />
-                  {console.log(iimage)}
                </Grid>
             ))}
             {/* <Grid container item md={4} sm={6} justify='center'>

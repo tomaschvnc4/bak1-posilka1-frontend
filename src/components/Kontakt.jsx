@@ -69,7 +69,7 @@ const Kontakt = () => {
                </Grid>
                <Paper elevation={5} className='kontakt-paper'>
                   <OtvaracieHodiny />
-                  {konkretneDniOH.length != 0 && (
+                  {/* {konkretneDniOH.length != 0 && (
                      <div className='zmenaOH'>
                         {console.log(konkretneDniOH)}
                         <Typography color='secondary' variant='body1' component='h6'>
@@ -92,7 +92,8 @@ const Kontakt = () => {
                            );
                         })}
                      </div>
-                  )}
+                  )} */}
+                  <ZmenaOtvaracichHodin />
                </Paper>
                {/* <SvgIcon viewBox='0 0 50 50'>
                   <PositionIcon />
@@ -112,6 +113,38 @@ const Kontakt = () => {
 };
 
 export default Kontakt;
+
+export const ZmenaOtvaracichHodin = () => {
+   const { konkretneDniOH } = useGlobalContext();
+   return (
+      <React.Fragment>
+         {konkretneDniOH.length != 0 && (
+            <div className='zmenaOH'>
+               {console.log(konkretneDniOH)}
+               <Typography color='secondary' variant='body1' component='h6'>
+                  Zmena otváracích hodín!
+               </Typography>
+               {konkretneDniOH.map((item) => {
+                  const { timestamp, od, do: doo, zavrete } = item;
+                  return (
+                     timestamp && (
+                        <Typography
+                           // style={{ display: 'flex' }}
+                           key={timestamp}
+                           variant='body1'>
+                           →&nbsp;{moment(timestamp).format('dd-DD.MM.YYYY')}&nbsp;
+                           {od}&nbsp;
+                           {doo}
+                           {!!zavrete && 'zavreté'}
+                        </Typography>
+                     )
+                  );
+               })}
+            </div>
+         )}
+      </React.Fragment>
+   );
+};
 
 const BotProtectedField = ({ type }) => {
    const [email, setEmail] = React.useState('');

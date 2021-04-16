@@ -34,7 +34,7 @@ const Calendar = () => {
    return (
       <React.Fragment>
          {refuse ? (
-            <Paper className='rezervovat-warning'>
+            <Paper className='warning'>
                <Typography color='secondary'>
                   Nie je možné vytvoriť rezerváciu, ak nemáte vyplnené profilové údaje
                </Typography>
@@ -46,7 +46,7 @@ const Calendar = () => {
                <CalTable />
             </div>
          ) : (
-            <Paper className='rezervovat-warning'>
+            <Paper className='warning'>
                <Typography color='secondary'>
                   Momentálne nie je možné vytvoriť rezereváciu!
                </Typography>
