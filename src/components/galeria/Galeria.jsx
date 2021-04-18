@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
    root: {
       '& img': {
          width: '100%',
-         maxWidth: '400px',
+         // maxWidth: '400px',
          height: 'auto',
          boxShadow:
             '0px 10px 13px -6px rgb(0 0 0 / 20%), 0px 20px 31px 3px rgb(0 0 0 / 14%), 0px 8px 36px 7px rgb(0 0 0 / 12%);',
