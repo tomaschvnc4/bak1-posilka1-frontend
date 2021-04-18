@@ -84,8 +84,8 @@ const AppProvider = ({ children }) => {
       let workingMinT = '23:00';
       let workingMaxT = '01:00';
 
-      const { calendarLength, calendarLengthXS } = calendarInitState;
-      let calendarLengthTMP = isMobile ? calendarLengthXS : calendarLength;
+      const { calendarLength, calendarLengthMobile } = calendarInitState;
+      let calendarLengthTMP = isMobile ? calendarLengthMobile : calendarLength;
 
       const length = arrTime.length;
       if (length !== 0) {
@@ -287,8 +287,8 @@ const AppProvider = ({ children }) => {
       console.log('data_SETTINGS:', data);
       const values = Object.values(data);
 
-      const { calendarLength, calendarLengthXS } = calendarInitState;
-      const maxNextDaysXS = data.maxNextDays + (calendarLength - calendarLengthXS);
+      const { calendarLength, calendarLengthMobile } = calendarInitState;
+      const maxNextDaysXS = data.maxNextDays + (calendarLength - calendarLengthMobile);
       let posunDay = data.maxNextDays;
       let minT = '23:00',
          maxT = '01:00';
@@ -364,11 +364,11 @@ const AppProvider = ({ children }) => {
 
    useEffect(() => {
       //zmena poctu zobrazenych dni pri rozliseni telefonu XS
-      const { calendarLength, calendarLengthXS } = calendarInitState;
+      const { calendarLength, calendarLengthMobile } = calendarInitState;
       let { maxNextDays, maxNextDaysXS } = calSettings;
       console.log(JSON.stringify(flagsRef));
       if (isMobile) {
-         calendarLengthRef.current = calendarLengthXS;
+         calendarLengthRef.current = calendarLengthMobile;
          posunDayRef.current = maxNextDaysXS;
          console.log('posunDayRef', posunDayRef);
       } else {

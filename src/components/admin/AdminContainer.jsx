@@ -39,7 +39,6 @@ const AdminContainer = () => {
       }
    }, [isAuthenticated]);
 
-   console.log('render AdminContainer');
    if (!isAdmin) {
       return <Redirect to='/' />;
    }
@@ -51,7 +50,6 @@ const AdminContainer = () => {
          <SetOH />
          <SetKonkretnyDen />
          <SetCennik />
-         {/* <Grid item md={6} xs={12}></Grid> */}
          <AdminPouzivatelia />
          <AdminRezervacie />
       </Grid>

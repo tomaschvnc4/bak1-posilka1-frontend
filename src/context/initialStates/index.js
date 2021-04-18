@@ -18,7 +18,7 @@ export const calendarInitState = {
    kapacity: 1,
    loading: false,
    calendarLength: 7, //kolko dni sa bude zobrazovat na monitore
-   calendarLengthXS: 4, //kolko dni sa bude zobrazovat na monitore/mobile na rozliseni XS
+   calendarLengthMobile: 4, //kolko dni sa bude zobrazovat na monitore/mobile na rozliseni XS
 
    calSettings: {},
    objOpen: {}, //{timestamp:[false,false,true,true....]}

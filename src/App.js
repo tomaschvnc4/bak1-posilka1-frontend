@@ -14,16 +14,15 @@ function App() {
       <div className='page-container'>
          <div className='content-wrap'>
             <Navbar />
-            {/* <NavBar /> */}
             <Switch>
                <Route path='/' exact component={HomePage} />
                <Route path='/sluzby' exact component={SluzbyPage} />
-               <Route path='/cennik' component={CennikPage} />
-               <Route path='/galeria' component={GaleriaPage} />
-               <Route path='/kontakt' component={KontaktPage} />
-               <ProtectedRoute path='/profil' component={ProfilPage} />
-               <ProtectedRoute path='/rezervovat' component={Rezervacie} />
-               <ProtectedRoute path='/adminPanel' component={AdminPanel} />
+               <Route path='/cennik' exact component={CennikPage} />
+               <Route path='/galeria' exact component={GaleriaPage} />
+               <Route path='/kontakt' exact component={KontaktPage} />
+               <ProtectedRoute path='/profil' exact component={ProfilPage} />
+               <ProtectedRoute path='/rezervovat' exact component={Rezervacie} />
+               <ProtectedRoute path='/adminPanel' exact component={AdminPanel} />
                <Route path='/*' component={ErrorPage} />
             </Switch>
          </div>

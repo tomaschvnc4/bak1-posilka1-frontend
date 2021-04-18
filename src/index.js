@@ -8,7 +8,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Auth0ProviderWithHistory from './auth/auth0-provider-with-history';
 import { ThemeProvider } from '@material-ui/styles';
 import { createMuiTheme } from '@material-ui/core';
-import { Helmet } from 'react-helmet';
+// import { Helmet } from 'react-helmet';
 // import reportWebVitals from './reportWebVitals';
 // import { AppProvider } from './_contex';
 
@@ -23,10 +23,6 @@ const theme = createMuiTheme({
 ReactDOM.render(
    // <React.StrictMode>
    <Router>
-      <Helmet>
-         <title>rooot</title>
-         <meta name='description' content='jano' />
-      </Helmet>
       <Auth0ProviderWithHistory>
          <AppProvider>
             <ThemeProvider theme={theme}>

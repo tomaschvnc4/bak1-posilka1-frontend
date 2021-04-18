@@ -81,7 +81,7 @@ const Cal_nav = () => {
                   Dnes
                </Button>
                <Button variant='outlined' onClick={() => submitReserve()}>
-                  uložiť{' '}
+                  uložiť
                </Button>
             </Grid>
          </Grid>
