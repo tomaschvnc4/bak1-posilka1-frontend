@@ -40,6 +40,7 @@ const AppProvider = ({ children }) => {
    const [konkretneDniOH, setKonkretneDniOH] = useState(calendarInitState.konkretneDniOH);
    //OTHER STATES
    const [cennik, setCennik] = useState(otherInitState.cennik);
+   const [cooksieOpen, setCooksieOpen] = useState(true);
 
    //USER STATE
    const [dbUser, setDbUser] = useState(userInitState);
@@ -71,11 +72,11 @@ const AppProvider = ({ children }) => {
       }
       setArrTime(arrTime);
       flagsRef.current.timeSeted = true;
-      console.log('setTime END');
+      // console.log('setTime END');
    }
 
    function setWeek2() {
-      console.log('setWeek STRAT');
+      // console.log('setWeek STRAT');
       let arrWeek = [];
       let newReserve = { ...arrReserve };
       let newUserSelect = { ...userSelect };
@@ -127,7 +128,7 @@ const AppProvider = ({ children }) => {
          if (workingMinT >= minT) workingMinT = minT;
          if (workingMaxT <= maxT) workingMaxT = maxT;
 
-         console.log('END SET_WEEK');
+         // console.log('END SET_WEEK');
          setArrWeek(arrWeek);
          setArrReserve(newReserve);
          setUserSelect(newUserSelect);
@@ -284,7 +285,7 @@ const AppProvider = ({ children }) => {
    async function fetchSettings() {
       const response = await Axios.get(`${serverUrl}/calendar/getCalendarSettings`);
       const data = response.data[0];
-      console.log('data_SETTINGS:', data);
+      // console.log('data_SETTINGS:', data);
       const values = Object.values(data);
 
       const { calendarLength, calendarLengthMobile } = calendarInitState;
@@ -310,28 +311,28 @@ const AppProvider = ({ children }) => {
    async function getZoznamOH() {
       const response = await Axios.get(`${serverUrl}/calendar/get-zmena-otvorenie-specificky-den`);
       const data = response.data;
-      console.log('getZoznamOH-data', data);
+      // console.log('getZoznamOH-data', data);
       setKonkretneDniOH(response.data);
 
       flagsRef.current.zoznamOHfetched = true;
    }
 
    useEffect(() => {
-      console.log('effect fetch');
+      // console.log('effect fetch');
       // console.log(JSON.stringify(flagsRef));
       fetchSettings();
       getZoznamOH();
    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
    useEffect(() => {
-      console.log('effect settime');
+      // console.log('effect settime');
       // console.log(JSON.stringify(flagsRef));
       setTime2();
       // setTime2();
    }, [flagsRef.current.settingsFetched]); // eslint-disable-line react-hooks/exhaustive-deps
 
    useEffect(() => {
-      console.log('effec setSDOH');
+      // console.log('effec setSDOH');
       // console.log(JSON.stringify(flagsRef));
       if (flagsRef.current.timeSeted && flagsRef.current.zoznamOHfetched) {
          isOpenSpecificOH();
@@ -339,7 +340,7 @@ const AppProvider = ({ children }) => {
    }, [flagsRef.current.zoznamOHfetched]); // eslint-disable-line react-hooks/exhaustive-deps
 
    useEffect(() => {
-      console.log('effect setweek', flagsRef.current.objOpenSDOH_setted);
+      // console.log('effect setweek', flagsRef.current.objOpenSDOH_setted);
       // console.log(JSON.stringify(flagsRef));
       if (flagsRef.current.objOpenSDOH_setted) {
          setWeek2();
@@ -366,11 +367,11 @@ const AppProvider = ({ children }) => {
       //zmena poctu zobrazenych dni pri rozliseni telefonu XS
       const { calendarLength, calendarLengthMobile } = calendarInitState;
       let { maxNextDays, maxNextDaysXS } = calSettings;
-      console.log(JSON.stringify(flagsRef));
+      // console.log(JSON.stringify(flagsRef));
       if (isMobile) {
          calendarLengthRef.current = calendarLengthMobile;
          posunDayRef.current = maxNextDaysXS;
-         console.log('posunDayRef', posunDayRef);
+         // console.log('posunDayRef', posunDayRef);
       } else {
          calendarLengthRef.current = calendarLength;
          posunDayRef.current = maxNextDays;
@@ -378,7 +379,13 @@ const AppProvider = ({ children }) => {
       changeDay('today');
    }, [isMobile, flagsRef.current.settingsFetched]);
 
-   console.count('renderPROFIDER');
+   useEffect(() => {
+      if (document.cookie.split(';').some((item) => item.includes('cookieComfirmed=1'))) {
+         setCooksieOpen(false);
+      }
+   }, []);
+
+   // console.count('renderPROFIDER');
    return (
       <AppContext.Provider
          value={{
@@ -413,6 +420,8 @@ const AppProvider = ({ children }) => {
             //auth
             getAccessTokenSilently,
             user,
+            cooksieOpen,
+            setCooksieOpen,
          }}>
          {children}
       </AppContext.Provider>

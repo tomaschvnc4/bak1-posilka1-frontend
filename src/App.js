@@ -8,6 +8,8 @@ import './App.css';
 import Navbar from './components/navbar/Navbar';
 import ProtectedRoute from './auth/protected-route';
 import Footer from './components/footer/Footer';
+import CookieAlert from './components/GDPR_cookie/CookieAlert';
+import GDPR_cookie from './components/GDPR_cookie/GDPR_cookieInfo';
 
 function App() {
    return (
@@ -23,10 +25,11 @@ function App() {
                <ProtectedRoute path='/profil' exact component={ProfilPage} />
                <ProtectedRoute path='/rezervovat' exact component={Rezervacie} />
                <ProtectedRoute path='/adminPanel' exact component={AdminPanel} />
+               <Route path='/zasady-ochrany-osobnych-udajov' exact component={GDPR_cookie} />
                <Route path='/*' component={ErrorPage} />
             </Switch>
          </div>
-
+         <CookieAlert />
          <Footer />
       </div>
    );
