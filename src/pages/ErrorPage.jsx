@@ -5,7 +5,7 @@ import NotFound404 from '../components/NotFound404';
 const ErrorPage = () => {
    return (
       <dir>
-         <MetaDecorator title={metaData.error.title} description={metaData.error.description} />
+         <MetaDecorator metaData={metaData.error} />
          <NotFound404 />
       </dir>
    );

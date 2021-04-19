@@ -4,7 +4,7 @@ import { MetaDecorator, metaData } from '../components/metaDecorator';
 const KontaktPage = () => {
    return (
       <div>
-         <MetaDecorator title={metaData.kontakt.title} description={metaData.kontakt.description} />
+         <MetaDecorator metaData={metaData.kontakt} />
          <Kontakt />
       </div>
    );

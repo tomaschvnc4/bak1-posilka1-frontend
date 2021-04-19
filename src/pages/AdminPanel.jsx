@@ -6,7 +6,7 @@ import { MetaDecorator, metaData } from '../components/metaDecorator';
 const AdminPanel = () => {
    return (
       <div>
-         <MetaDecorator title={metaData.admin.title} description={metaData.admin.description} />
+         <MetaDecorator metaData={metaData.admin} />
          <AdminContainer />
       </div>
    );

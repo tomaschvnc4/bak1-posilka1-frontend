@@ -5,7 +5,7 @@ import { MetaDecorator, metaData } from '../components/metaDecorator';
 const HomePage = () => {
    return (
       <Fragment>
-         <MetaDecorator title={metaData.home.title} description={metaData.home.description} />
+         <MetaDecorator metaData={metaData.home} />
          <Home />
       </Fragment>
    );

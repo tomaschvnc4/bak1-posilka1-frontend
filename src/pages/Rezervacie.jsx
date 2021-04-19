@@ -4,10 +4,7 @@ import { MetaDecorator, metaData } from '../components/metaDecorator';
 const Rezervacie = () => {
    return (
       <div>
-         <MetaDecorator
-            title={metaData.rezervacie.title}
-            description={metaData.rezervacie.description}
-         />
+         <MetaDecorator metaData={metaData.rezervacie} />
          <Calendar />
       </div>
    );

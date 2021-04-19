@@ -4,7 +4,7 @@ import { MetaDecorator, metaData } from '../components/metaDecorator';
 const SluzbyPage = () => {
    return (
       <div>
-         <MetaDecorator title={metaData.sluzby.title} description={metaData.sluzby.description} />
+         <MetaDecorator metaData={metaData.sluzby} />
          <Sluzby />;
       </div>
    );

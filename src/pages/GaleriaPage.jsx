@@ -4,7 +4,7 @@ import { MetaDecorator, metaData } from '../components/metaDecorator';
 const GaleriaPage = () => {
    return (
       <div>
-         <MetaDecorator title={metaData.galeria.title} description={metaData.galeria.description} />
+         <MetaDecorator metaData={metaData.galeria} />
          <Galeria />
       </div>
    );

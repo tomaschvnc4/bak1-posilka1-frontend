@@ -5,7 +5,7 @@ import { MetaDecorator, metaData } from '../components/metaDecorator';
 const CennikPage = () => {
    return (
       <div>
-         <MetaDecorator title={metaData.cennik.title} description={metaData.cennik.description} />
+         <MetaDecorator metaData={metaData.cennik} />
          <Cennik />
       </div>
    );
