@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid, Paper, Typography, makeStyles } from '@material-ui/core';
-import image from '../images/jungleGym.jpg';
+import image from '../images/galeria/01.jpg';
 import Cennik from './cennik/Cennik';
 
 const Home = () => {

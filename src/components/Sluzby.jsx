@@ -1,5 +1,8 @@
 import React from 'react';
 import image from '../images/jungleGym.jpg';
+import imgDalsieSluzby from '../images/galeria/01.jpg';
+import imgKardio from '../images/galeria/13.jpg';
+import imgFitness from '../images/galeria/12.jpg';
 import { Link } from 'react-router-dom';
 //prettier-ignore
 import { Grid, Paper, Typography, makeStyles, useMediaQuery, useTheme, List, ListItem, ListItemIcon, ListItemText, ThemeProvider } from '@material-ui/core';
@@ -10,13 +13,13 @@ const data = [
    {
       title: 'Fitness',
       text1: `V tomto priestore sa nachádzajú posilňovacie stroje značky Life fitness (16 strojov LIFE FITNESS Signature), pákové stroje na OLIPM HAMMER STRENGHT, multifunkčná veža. Súčasťou tohto priestoru je silová zóna, multipress, jednoručky 1-60 kg, pevne naložené činky, priestor na vzpieranie.`,
-      img: image,
+      img: imgFitness,
       imgRight: false,
    },
    {
       title: 'Kardio',
       text1: `Kardio zóna je vybavená profesionálnymi zariadeniami značky LIFE FITNESS, TECHNOGYM, Concept2 - veslo, Concept 2- bežkársky trenažér`,
-      img: image,
+      img: imgKardio,
       imgRight: true,
    },
    {
@@ -43,7 +46,7 @@ const data = [
             </Link>
          </p>
       ),
-      img: image,
+      img: imgDalsieSluzby,
       imgRight: true,
    },
 ];
