@@ -1,38 +1,54 @@
 {
-   "cennik": {
-      "title": "Cenník | Jungle Gym",
-      "description": "Cenník vstupov: jednorazový, permanetka - študentská, vstupová, mesačná"
-   },
    "home": {
       "title": "Fitness centrum Jungle Gym | Liptovský Mikuláš",
-      "description": "JUNGLE GYM je fitness klub, so zameraním na klasický, aj funkčný tréning, posilňovanie a formovanie tela, budovanie a udržanie kondície, udržanie a obnovovanie zdravia a funkčnosti pohybového aparátu a miesto kde ľudia trávia svoj voľný čas, za účelom starostlivosti o svoje telo, kondíciu a zdravie a miestom psychického uvoľnenia.Majiteľ a prevádzkovateľ Ľuboš Turčina bol úspešný reprezentant v kulturistike, je profesionálni fitness tréner a výživový poradca s dlhoročnými skúsenosťami."
+      "description": "JUNGLE GYM je fitness klub, so zameraním na klasický, aj funkčný tréning, posilňovanie a formovanie tela, budovanie a udržanie kondície, udržanie a obnovovanie zdravia a funkčnosti pohybového aparátu a miesto kde ľudia trávia svoj voľný čas, za účelom starostlivosti o svoje telo, kondíciu a zdravie a miestom psychického uvoľnenia.Majiteľ a prevádzkovateľ Ľuboš Turčina bol úspešný reprezentant v kulturistike, je profesionálni fitness tréner a výživový poradca s dlhoročnými skúsenosťami.",
+      "canonical": "https://www.junglegymlm.sk/"
    },
+
    "sluzby": {
-      "title": "Služby | Jungle Gym - Fitness centrum ",
-      "description": ""
+      "title": "Fitness centrum Jungle Gym | Služby",
+      "description": "",
+      "canonical": "https://www.junglegymlm.sk/sluzby"
    },
+
+   "cennik": {
+      "title": "Fitness centrum Jungle Gym | Cenník",
+      "description": "Cenník vstupov: jednorazový vstup, permanetka - študentská, vstupová, mesačná",
+      "canonical": "https://www.junglegymlm.sk/cennik"
+   },
+
    "galeria": {
-      "title": "Galéria | Jungle Gym - Fitness centrum ",
-      "description": "Galéria fitness centra - posilňovne Jungle Gym"
+      "title": "Fitness centrum Jungle Gym | Galéria",
+      "description": "Galéria fitness centra - posilňovne Jungle Gym",
+      "canonical": "https://www.junglegymlm.sk/galeria"
    },
+
    "kontakt": {
-      "title": "Kontakt | Jungle Gym",
-      "description": "Kontaktné informácie na prevádzkovateľa fitness centra Jungle Gym. Nachádzame blízko centra mesta Liptovský Mikuláš, hneď pri hlavnom cestnom ťahu, s parkovaním zadarmo."
+      "title": "Fitness centrum Jungle Gym | Kontakt",
+      "description": "Kontaktné informácie na prevádzkovateľa fitness centra Jungle Gym. Nachádzame blízko centra mesta Liptovský Mikuláš, hneď pri hlavnom cestnom ťahu, s parkovaním zadarmo.",
+      "canonical": "https://www.junglegymlm.sk/kontakt"
    },
+
    "admin": {
       "title": "Admin panel | Jungle Gym",
-      "description": "Nastavenia stranky pre administratora"
+      "description": "Nastavenia stranky pre administratora",
+      "canonical": "https://www.junglegymlm.sk/adminPanel"
    },
+
    "rezervacie": {
       "title": "Rezervácie | Jungle Gym",
-      "description": "Kalendár pre vytvorenie rezervácie vo fitness centre Jungle Gym"
+      "description": "Kalendár pre vytvorenie rezervácie vo fitness centre Jungle Gym",
+      "canonical": "https://www.junglegymlm.sk/rezervovat"
    },
+
    "profil": {
       "title": "Profil | Jungle Gym",
-      "description": "Profilové údaje"
+      "description": "Profilové údaje",
+      "canonical": "https://www.junglegymlm.sk/profil"
    },
+
    "error": {
-      "title": "404 | Jungle Gym h",
-      "description": "Stránka sa nenašla h"
+      "title": "404 | Jungle Gym",
+      "description": "Stránka sa nenašla"
    }
 }
