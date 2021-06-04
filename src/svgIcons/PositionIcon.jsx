@@ -4,8 +4,6 @@ import React from 'react';
  * parameter style={{width, height, color1, color2}}
  */
 const PositionIcon = (props) => {
-   // console.log(props);
-   // console.log(props.style);
    const { width, height, color, color2 } = props.style || {};
    return (
       <svg

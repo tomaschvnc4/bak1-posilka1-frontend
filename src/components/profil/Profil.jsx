@@ -42,28 +42,28 @@ const Profil = () => {
    const { user } = useAuth0();
    let { picture } = user;
 
-   function changePassword() {
-      let options = {
-         method: 'POST',
-         url: `https://${domain}/dbconnections/change_password`,
-         headers: { 'content-type': 'application/json' },
-         data: {
-            client_id: user.sub,
-            email: '',
-            connection: 'Username-Password-Authentication',
-         },
-      };
-      console.log('change password');
-      Axios.request(options)
-         .then(function (response) {
-            console.log(response.data);
-         })
-         .catch(function (error) {
-            console.error(error);
-         });
-   }
+   // function changePassword() {
+   //    let options = {
+   //       method: 'POST',
+   //       url: `https://${domain}/dbconnections/change_password`,
+   //       headers: { 'content-type': 'application/json' },
+   //       data: {
+   //          client_id: user.sub,
+   //          email: '',
+   //          connection: 'Username-Password-Authentication',
+   //       },
+   //    };
+   //    console.log('change password');
+   //    Axios.request(options)
+   //       .then(function (response) {
+   //          console.log(response.data);
+   //       })
+   //       .catch(function (error) {
+   //          console.error(error);
+   //       });
+   // }
 
-   console.count('render Profil');
+   // console.count('render Profil');
 
    if (!dbUser.email) {
       console.log('profil loading render');
@@ -186,8 +186,6 @@ const EditField = (props) => {
    const { getAccessTokenSilently } = useAuth0();
    const { dbUser, setDbUser } = useGlobalContext();
 
-   // const [isOpen, setIsOpen] = useState(false);
-
    async function submitEditItem(data) {
       if (name !== '' || data !== '') {
          const token = await getAccessTokenSilently();
@@ -213,7 +211,6 @@ const EditField = (props) => {
 
    return (
       <div>
-         {/* {isOpen && <AlertBox />} */}
          <form style={{ display: 'inline-flex' }} onSubmit={handleSubmit(submitEditItem)}>
             <TextField
                label={`${capitalize(name)}`}

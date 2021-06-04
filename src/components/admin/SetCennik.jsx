@@ -7,7 +7,7 @@ import { useGlobalContext } from '../../context/Provider2';
 import { useForm } from 'react-hook-form';
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
-console.log('serverURL', serverUrl);
+// console.log('serverURL', serverUrl);
 
 const SetCennik = () => {
    const classes = useStyles();

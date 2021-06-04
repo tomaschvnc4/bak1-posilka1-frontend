@@ -10,7 +10,7 @@ import 'moment/locale/sk';
 moment.locale('sk');
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
-console.log('serverURL', serverUrl);
+// console.log('serverURL', serverUrl);
 
 const AdminRezervacie = () => {
    const classes = useStyles();

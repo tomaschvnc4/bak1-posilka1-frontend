@@ -31,7 +31,7 @@ const Cal_nav = () => {
          if (zmena) {
             submitData[userId] || (submitData[userId] = {});
             submitData[userId][key] = { minI, maxI };
-            userSelect[key].zmena = false; //aj tak je to referencia na pole cije je jedno ci pouzijem plytku kopiu objektu userSelect alebo nie
+            userSelect[key].zmena = false;
          }
       }
       // console.log('send:');

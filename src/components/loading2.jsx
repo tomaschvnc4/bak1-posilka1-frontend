@@ -1,12 +1,11 @@
 import clsx from 'clsx';
 import React, { useEffect } from 'react';
 import { useGlobalContext } from '../context/Provider2';
-// import loadingImg from '../images/loading 180px yellow.svg';
 
 const Loading2 = () => {
    const { isLoadingCalData } = useGlobalContext();
    useEffect(() => {
-      console.log('loading2 render');
+      // console.log('loading2 render');
    }, [isLoadingCalData]);
    return (
       // <div className={clsx('loading', isLoadingCal && 'show-loading')}>

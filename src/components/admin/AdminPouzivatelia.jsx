@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import {Grid,TextField,Axios,Paper,TableRow,makeStyles,Table,TableBody,TableCell,TableContainer,withStyles,InputAdornment,SearchIcon,useAuth0} from './_import';
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
-console.log('serverURL', serverUrl);
+// console.log('serverURL', serverUrl);
 
 const AdminPouzivatelia = () => {
    const classes = useStyles();
@@ -46,7 +46,7 @@ const AdminPouzivatelia = () => {
       }
    }, []);
 
-   console.log('render');
+   // console.log('render');
    return (
       <Grid
          container
@@ -101,7 +101,6 @@ const AdminPouzivatelia = () => {
                               const { meno, telefon, email } = user || {};
                               return (
                                  <StyledTableRow key={`${index}${email}`}>
-                                    {/* <StyledTableCell rowSpan={1}></StyledTableCell> */}
                                     <StyledTableCell align='center'>
                                        <b>{meno}</b>
                                     </StyledTableCell>
@@ -156,17 +155,6 @@ const useStyles = makeStyles((theme) => ({
             fontWeight: 'bold',
          },
       },
-
-      // '& .MuiTextField-root': {
-      //    margin: theme.spacing(1),
-      //    width: '8ch',
-      //    [theme.breakpoints.up('lg')]: {
-      //       width: '12ch',
-      //    },
-      // },
-      // '& .MuiTextField-root:nth-child(2)': {
-      //    width: '30ch',
-      // },
    },
 }));
 

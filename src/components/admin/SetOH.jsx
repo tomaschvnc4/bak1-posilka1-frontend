@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { Axios, TextField, Autocomplete, Grid, makeStyles, Paper } from './_import';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { timeSlots } from '../../helpers';
 
 import { useGlobalContext } from '../../context/Provider2';
@@ -11,8 +11,8 @@ const serverUrl = process.env.REACT_APP_SERVER_URL;
 
 const SetOH = () => {
    const classes = useStyles();
-   const { register, handleSubmit, setValue, errors } = useForm(); // potom skusit cez controll aby bolo mozne mat defaul hodnotu bez prerendrovana vzdy pri zmene
-   const { calSettings, setCalSettings, setPosunDay, getAccessTokenSilently } = useGlobalContext();
+   const { register, handleSubmit, setValue, errors } = useForm();
+   const { calSettings, getAccessTokenSilently } = useGlobalContext();
 
    const [newValues, setNewValues] = useState({});
    const [checked, setChecked] = useState(false);
@@ -26,9 +26,6 @@ const SetOH = () => {
          },
       };
       Axios.post(`${serverUrl}/calendar/editHodiny`, { payload: dataToSend }, options);
-
-      //+ alert ze treba po zmene refresh stranky -- alebo to poriesit este
-      // // TODO alert
    }
    const dni = ['PonPia', 'SobNed'];
    // const dni = ['Pondelok - Piatok', 'Sobota - Nedela'];
@@ -136,7 +133,7 @@ const SetOH = () => {
                               options={timeSlots}
                               value={newValues[keyOd] || ''}
                               onChange={(e, newValue) => {
-                                 console.log('newVal:', newValue);
+                                 // console.log('newVal:', newValue);
                                  if (newValue === null || newValue === '') {
                                     setNewValues({
                                        ...newValues,
@@ -176,7 +173,7 @@ const SetOH = () => {
                               getOptionDisabled={(option) => option <= newValues[keyOd]}
                               value={newValues[keyDo] || ''}
                               onChange={(e, newValue) => {
-                                 console.log('newVal:', newValue);
+                                 // console.log('newVal:', newValue);
                                  setNewValues({ ...newValues, [keyDo]: newValue });
                               }}
                               renderInput={(params) => (

@@ -278,8 +278,6 @@ const AppProvider = ({ children }) => {
       setUserSelect(newUserSelect);
 
       setIsLoadingCal(false);
-      // console.log('loading of', JSON.stringify(isLoadingCal));
-      // TODO stop loading
    }
 
    async function fetchSettings() {
@@ -311,37 +309,27 @@ const AppProvider = ({ children }) => {
    async function getZoznamOH() {
       const response = await Axios.get(`${serverUrl}/calendar/get-zmena-otvorenie-specificky-den`);
       const data = response.data;
-      // console.log('getZoznamOH-data', data);
       setKonkretneDniOH(response.data);
 
       flagsRef.current.zoznamOHfetched = true;
    }
 
    useEffect(() => {
-      // console.log('effect fetch');
-      // console.log(JSON.stringify(flagsRef));
       fetchSettings();
       getZoznamOH();
    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
    useEffect(() => {
-      // console.log('effect settime');
-      // console.log(JSON.stringify(flagsRef));
       setTime2();
-      // setTime2();
    }, [flagsRef.current.settingsFetched]); // eslint-disable-line react-hooks/exhaustive-deps
 
    useEffect(() => {
-      // console.log('effec setSDOH');
-      // console.log(JSON.stringify(flagsRef));
       if (flagsRef.current.timeSeted && flagsRef.current.zoznamOHfetched) {
          isOpenSpecificOH();
       }
    }, [flagsRef.current.zoznamOHfetched]); // eslint-disable-line react-hooks/exhaustive-deps
 
    useEffect(() => {
-      // console.log('effect setweek', flagsRef.current.objOpenSDOH_setted);
-      // console.log(JSON.stringify(flagsRef));
       if (flagsRef.current.objOpenSDOH_setted) {
          setWeek2();
       }
@@ -367,11 +355,9 @@ const AppProvider = ({ children }) => {
       //zmena poctu zobrazenych dni pri rozliseni telefonu XS
       const { calendarLength, calendarLengthMobile } = calendarInitState;
       let { maxNextDays, maxNextDaysXS } = calSettings;
-      // console.log(JSON.stringify(flagsRef));
       if (isMobile) {
          calendarLengthRef.current = calendarLengthMobile;
          posunDayRef.current = maxNextDaysXS;
-         // console.log('posunDayRef', posunDayRef);
       } else {
          calendarLengthRef.current = calendarLength;
          posunDayRef.current = maxNextDays;
@@ -385,7 +371,6 @@ const AppProvider = ({ children }) => {
       }
    }, []);
 
-   // console.count('renderPROFIDER');
    return (
       <AppContext.Provider
          value={{

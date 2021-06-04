@@ -35,7 +35,7 @@ const SetKonkretnyDen = () => {
    const myOnSubmit = async (data, e) => {
       data.datePicker = data.datePicker.valueOf();
       data.zavrete = checked;
-      console.log(data.datePicker);
+
       if (isNaN(data.datePicker)) {
          setError({ state: true, mes: 'Nesprávny formát času!' });
          return;
@@ -54,8 +54,6 @@ const SetKonkretnyDen = () => {
          options
       );
       setNacitatZonam(true);
-
-      // TODO alert
    };
 
    async function getZoznamOH() {
@@ -192,8 +190,6 @@ const SetKonkretnyDen = () => {
                         )}
                      />
 
-                     {/* <p> - </p> */}
-                     {console.log('konkretny dencas', konkretnyDenCas)}
                      <Autocomplete
                         disabled={checked ? true : konkretnyDenCas.od ? false : true}
                         // disabled={checked}

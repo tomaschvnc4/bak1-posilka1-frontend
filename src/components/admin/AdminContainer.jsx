@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import SetCennik from './SetCennik';
 
 import SetKonkretnyDen from './SetKonkretnyDen';
@@ -33,7 +33,7 @@ const AdminContainer = () => {
                setIsAdmin(false);
             }
          } catch (error) {
-            console.log('test container-isAdmin', error);
+            // console.log('test container-isAdmin', error);
             setIsAdmin(false);
          }
       }

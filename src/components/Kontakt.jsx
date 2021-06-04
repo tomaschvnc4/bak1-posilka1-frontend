@@ -13,7 +13,7 @@ moment.locale('sk');
 
 const Kontakt = () => {
    const classes = useStyles();
-   const { konkretneDniOH } = useGlobalContext();
+
    return (
       <main className='kontakt-main-container'>
          <Typography variant='h3'>
@@ -69,30 +69,6 @@ const Kontakt = () => {
                </Grid>
                <Paper elevation={5} className='kontakt-paper'>
                   <OtvaracieHodiny />
-                  {/* {konkretneDniOH.length != 0 && (
-                     <div className='zmenaOH'>
-                        {console.log(konkretneDniOH)}
-                        <Typography color='secondary' variant='body1' component='h6'>
-                           Zmena otváracích hodín!
-                        </Typography>
-                        {konkretneDniOH.map((item) => {
-                           const { timestamp, od, do: doo, zavrete } = item;
-                           return (
-                              timestamp && (
-                                 <Typography
-                                    // style={{ display: 'flex' }}
-                                    key={timestamp}
-                                    variant='body1'>
-                                    →&nbsp;{moment(timestamp).format('dd-DD.MM.YYYY')}&nbsp;
-                                    {od}&nbsp;
-                                    {doo}
-                                    {!!zavrete && 'zavreté'}
-                                 </Typography>
-                              )
-                           );
-                        })}
-                     </div>
-                  )} */}
                   <ZmenaOtvaracichHodin />
                </Paper>
                {/* <SvgIcon viewBox='0 0 50 50'>
@@ -120,7 +96,6 @@ export const ZmenaOtvaracichHodin = () => {
       <React.Fragment>
          {konkretneDniOH.length != 0 && (
             <div className='zmenaOH'>
-               {console.log(konkretneDniOH)}
                <Typography color='secondary' variant='body1' component='h6'>
                   Zmena otváracích hodín!
                </Typography>

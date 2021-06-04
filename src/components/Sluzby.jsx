@@ -5,7 +5,7 @@ import imgKardio from '../images/galeria/13.jpg';
 import imgFitness from '../images/galeria/12.jpg';
 import { Link } from 'react-router-dom';
 //prettier-ignore
-import { Grid, Paper, Typography, makeStyles, useMediaQuery, useTheme, List, ListItem, ListItemIcon, ListItemText, ThemeProvider } from '@material-ui/core';
+import { Grid, Paper, Typography, makeStyles, useMediaQuery, useTheme, List, ListItem, ListItemIcon, ThemeProvider } from '@material-ui/core';
 import DoneOutlinedIcon from '@material-ui/icons/DoneOutlined';
 import themeGreenRed from '../themes/customPallete';
 
@@ -107,8 +107,6 @@ const Polozka = ({ props }) => {
 };
 
 const DalsieSluzbyList = ({ zoznam }) => {
-   const classes = useStyles();
-
    return (
       <List>
          {zoznam.map((text, index) => (
@@ -166,110 +164,3 @@ const useStyles = makeStyles((theme) => ({
       },
    },
 }));
-
-{
-   /* <Grid item md={6}>
-               <Paper elevation={20} >
-                  <Typography variant='h3'>
-                     <span>Kardio</span>
-                  </Typography>
-                  <p>
-                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae fuga iusto
-                     incidunt, eaque sequi magni, adipisci officia inventore accusantium ad
-                     doloribus, porro illum? Asperiores perferendis at velit voluptatem similique
-                     necessitatibus? Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae
-                     fuga iusto
-                  </p>
-               </Paper>
-            </Grid>
-            <Grid container item md={6} justify='center'>
-               <div className={classes.imgContainer}>
-                  <img src={image} alt='' />
-               </div>
-            </Grid> */
-}
-{
-   /*  */
-}
-{
-   /* {!isMobile && (
-               <Grid container item md={6} justify='center'>
-                  <div className={classes.imgContainer}>
-                     <img src={image} alt='' />
-                  </div>
-               </Grid>
-            )} */
-}
-
-{
-   /* <Grid item md={6}>
-               <Paper elevation={20} >
-                  <Typography variant='h3'>
-                     <span>Fitness</span>
-                  </Typography>
-                  <p>
-                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae fuga iusto
-                     incidunt, eaque sequi magni, adipisci officia inventore accusantium ad
-                     doloribus, porro illum? Asperiores perferendis at velit voluptatem similique
-                     necessitatibus? Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae
-                     fuga iusto
-                  </p>
-               </Paper>
-            </Grid>
-            {isMobile && (
-               <Grid container item md={6} justify='center'>
-                  <div className={classes.imgContainer}>
-                     <img src={image} alt='' />
-                  </div>
-               </Grid>
-            )} */
-}
-{
-   /*  */
-}
-{
-   /* <Grid item md={6}>
-               <Paper elevation={20} >
-                  <Typography variant='h3'>
-                     <span>Workout</span>
-                  </Typography>
-                  <p>
-                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae fuga iusto
-                     incidunt, eaque sequi magni, adipisci officia inventore accusantium ad
-                     doloribus, porro illum? Asperiores perferendis at velit voluptatem similique
-                     necessitatibus? Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae
-                     fuga iusto
-                  </p>
-               </Paper>
-            </Grid>
-            <Grid container item md={6} justify='center'>
-               <div className={classes.imgContainer}>
-                  <img src={image} alt='' />
-               </div>
-            </Grid> */
-}
-{
-   /*  */
-}
-{
-   /* <Grid container item md={6} justify='center'>
-               <div className={classes.imgContainer}>
-                  <img src={image} alt='' />
-               </div>
-            </Grid>
-            <Grid item md={6}>
-               <Paper elevation={20} >
-                  <Typography variant='h3'>
-                     <span>Ďalšie služby</span>
-                  </Typography>
-                  <p>Predtreningovky, proteiny, oblecenie</p>
-                  <p>
-                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae fuga iusto
-                     incidunt, eaque sequi magni, adipisci officia inventore accusantium ad
-                     doloribus, porro illum? Asperiores perferendis at velit voluptatem similique
-                     necessitatibus? Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae
-                     fuga iusto
-                  </p>
-               </Paper>
-            </Grid> */
-}
